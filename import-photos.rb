@@ -5,6 +5,8 @@ require 'mini_exiftool'
 require './zero-files.rb'
 
 def images(dir)
+  # TODO: Implement if more efficiently
+  # May be better approach is to yield
   files(dir).select { |f| 
     /^image/ =~ `file -b --mime-type "#{f}"`
   }
