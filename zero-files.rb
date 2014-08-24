@@ -3,7 +3,7 @@ require 'find'
 def files(dir)
   files = []
   Find.find(dir) do |f|
-    files << f unless FileTest.directory?(f) || File.size(f) > 0
+    files << f if File.file?(f) && File.zero?(f)
   end
 
   files
