@@ -32,6 +32,10 @@ def import(images, to_dir)
       yield img, target, :skipping_collision if block_given?
     else
       yield img, target, :moving if block_given?
+
+      #exif.user_comment = "original:#{img}"
+      #exif.save
+
       FileUtils.mv img, target
     end
   }
@@ -45,16 +49,30 @@ unless ARGV[0].nil? || ARGV[1].nil?
   puts
   puts "-------- import:start --------"
 
+  now = Time.now
+  timestamp = "#{now.year}-#{now.month}-#{now.day}-#{now.hour}-#{now.min}-#{now.sec}"
+  log = File.open("#{ARGV[1].chomp('/')}/import-photos_#{timestamp}.log", 'w')
+
   import(images(ARGV[0]), ARGV[1]) do |src, tgt, event|
+    msg = nil
+
     case event
       when :moving
-        puts "Moving.. from: #{src} --> #{tgt}"
+        msg = "Moving.. from: #{src} --> #{tgt}"
       when :skipping_collision
-        puts "Skipping.. name collision: #{tgt}"
+        msg = "Skipping.. name collision: #{tgt}"
       when :skipping_noexifdate
-        puts "Skipping.. No exif date: #{src}"
+        msg = "Skipping.. No exif date: #{src}"
+      else
+        msg = "UNEXPECTED.. src: #{src} tgt: #{tgt} event: #{event}"
     end
+
+    puts msg
+    log.puts msg
+    log.flush
   end
+
+  log.close
 
   puts "-------- import:end --------"
   puts
