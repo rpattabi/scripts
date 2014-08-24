@@ -18,13 +18,21 @@ def import(images, to_dir)
     date = exif.DateTimeDigitized if date.nil?
     date = exif.DateTime if date.nil?
 
-    unless date.nil?
-      date_dir = date_dir(to_dir, date)
-      FileUtils.mkpath date_dir
-      puts "#{img} will be moved to #{date_dir}/#{File.basename(img)}"
-      FileUtils.mv img, "#{date_dir}/#{File.basename(img)}"
+    if date.nil?
+      yield img, nil, :skipping_noexifdate if block_given?
+      next
+    end
+
+    date_dir = date_dir(to_dir, date)
+    FileUtils.mkpath date_dir
+
+    target = "#{date_dir}/#{File.basename(img)}"
+
+    if File.exists?(target)
+      yield img, target, :skipping_collision if block_given?
     else
-      puts "No exif date for #{img}"
+      yield img, target, :moving if block_given?
+      FileUtils.mv img, target
     end
   }
 end
@@ -34,6 +42,21 @@ def date_dir(root_dir, date)
 end
 
 unless ARGV[0].nil? || ARGV[1].nil?
-  import images(ARGV[0]), ARGV[1]
+  puts
+  puts "-------- import:start --------"
+
+  import(images(ARGV[0]), ARGV[1]) do |src, tgt, event|
+    case event
+      when :moving
+        puts "Moving.. from: #{src} --> #{tgt}"
+      when :skipping_collision
+        puts "Skipping.. name collision: #{tgt}"
+      when :skipping_noexifdate
+        puts "Skipping.. No exif date: #{src}"
+    end
+  end
+
+  puts "-------- import:end --------"
+  puts
 end
 
