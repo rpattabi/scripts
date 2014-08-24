@@ -16,12 +16,13 @@ def import(images, to_dir)
 
     date = exif.DateTimeOriginal
     date = exif.DateTimeDigitized if date.nil?
-    # date = exif.DateTime if date.nil?
+    date = exif.DateTime if date.nil?
 
     unless date.nil?
       date_dir = date_dir(to_dir, date)
-      #FileUtils.mkpath date_dir
+      FileUtils.mkpath date_dir
       puts "#{img} will be moved to #{date_dir}/#{File.basename(img)}"
+      FileUtils.mv img, "#{date_dir}/#{File.basename(img)}"
     else
       puts "No exif date for #{img}"
     end
@@ -29,7 +30,7 @@ def import(images, to_dir)
 end
 
 def date_dir(root_dir, date)
-    "#{root_dir.chomp('/')}/#{date.year}/#{'%02d' % date.month}/#{'%02d' % date.day}/"
+    "#{root_dir.chomp('/')}/#{date.year}/#{'%02d' % date.month}/#{'%02d' % date.day}"
 end
 
 unless ARGV[0].nil? || ARGV[1].nil?

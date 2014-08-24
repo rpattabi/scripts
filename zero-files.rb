@@ -22,4 +22,4 @@ def files(dir)
   files
 end
 
-#puts files(ARGV[0]) unless ARGV[0].nil?
+puts files(ARGV[0]) unless ARGV[0].nil?
