@@ -14,31 +14,35 @@ end
 
 def import(images, to_dir)
   images.each { |img|
-    exif = MiniExiftool.new img
-
-    date = exif.DateTimeOriginal
-    date = exif.DateTimeDigitized if date.nil?
-    date = exif.DateTime if date.nil?
-
-    if date.nil?
-      yield img, nil, :skipping_noexifdate if block_given?
-      next
-    end
-
-    date_dir = date_dir(to_dir, date)
-    FileUtils.mkpath date_dir
-
-    target = "#{date_dir}/#{File.basename(img)}"
-
-    if File.exists?(target)
-      yield img, target, :skipping_collision if block_given?
-    else
-      yield img, target, :moving if block_given?
-
-      #exif.user_comment = "original:#{img}"
-      #exif.save
-
-      FileUtils.mv img, target
+    begin
+      exif = MiniExiftool.new img
+ 
+      date = exif.DateTimeOriginal
+      date = exif.DateTimeDigitized if date.nil?
+      date = exif.DateTime if date.nil?
+ 
+      if date.nil?
+        yield img, nil, :skipping_noexifdate if block_given?
+        next
+      end
+ 
+      date_dir = date_dir(to_dir, date)
+      FileUtils.mkpath date_dir
+ 
+      target = "#{date_dir}/#{File.basename(img)}"
+ 
+      if File.exists?(target)
+        yield img, target, :skipping_collision if block_given?
+      else
+        yield img, target, :moving if block_given?
+ 
+        #exif.user_comment = "original:#{img}"
+        #exif.save
+ 
+        FileUtils.mv img, target
+      end
+    rescue Exception => e
+      yield img, nil, "exception: #{e.message}\n#{e.backtrace.inspect}"
     end
   }
 end
