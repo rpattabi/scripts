@@ -1,5 +1,5 @@
 require "./zero-files.rb"
-require "./import-photos.rb"
+require "./import-media.rb"
 
 require "rubygems"
 gem "mocha"
@@ -58,9 +58,9 @@ class ImageImportTest < Test::Unit::TestCase
     assert_equal(["#{SOURCE}/IMG_002.JPG", "#{SOURCE}/noexifdate.png"].sort, list);
   end
 
-  def test_images
-    images = images(SOURCE)
-    assert_equal(["#{SOURCE}/IMG_002.JPG", "#{SOURCE}/noexifdate.png"], images)
+  def test_media
+    media = media(SOURCE)
+    assert_equal(["#{SOURCE}/IMG_002.JPG", "#{SOURCE}/noexifdate.png"], media)
   end
 
   def test_date_dir
@@ -109,13 +109,13 @@ class ImageImportTest < Test::Unit::TestCase
   end
 
   def test_import_commandline
-    images = `ruby import-photos.rb`
-    assert(images.empty?)
+    media = `ruby import-media.rb`
+    assert(media.empty?)
 
     File.delete(TARGET_FILE) if File.exists? TARGET_FILE
     File.delete(TARGET_PATH) if File.exists? TARGET_PATH
 
-    images = `ruby import-photos.rb #{SOURCE} #{TARGET}`
+    media = `ruby import-media.rb #{SOURCE} #{TARGET}`
     assert(!File.exists?(SOURCE_FILE))
     assert(File.exists?(TARGET_PATH))
     assert(File.exists?(TARGET_FILE))
