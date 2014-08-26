@@ -63,6 +63,7 @@ unless ARGV[0].nil? || ARGV[1].nil?
 
   now = Time.now
   timestamp = "#{now.year}-#{now.month}-#{now.day}-#{now.hour}-#{now.min}-#{now.sec}"
+  FileUtils.mkpath ARGV[1]
   log = File.open("#{ARGV[1].chomp('/')}/import-photos_#{timestamp}.log", 'w')
 
   import(media(ARGV[0]), ARGV[1]) do |src, tgt, event|

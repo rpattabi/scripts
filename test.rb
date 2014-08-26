@@ -8,13 +8,27 @@ require "test/unit"
 require "mocha/test_unit"
 
 class ImageImportTest < Test::Unit::TestCase
+  TEST_DATA = "./test/data"
+
   SOURCE = "/tmp/root"
-  SOURCE_FILE = "#{SOURCE}/IMG_002.JPG"
+  @source_files = []
+  @source_files_valid_media = []
+
   TARGET = "#{SOURCE}/imported"
-  TARGET_PATH = "#{TARGET}/2008/08/29"
-  TARGET_FILE = "#{TARGET_PATH}/IMG_002.JPG"
+  TARGET_FILES = ["#{TARGET}/2008/08/29/IMG_002.JPG",
+                  "#{TARGET}/2001/02/19/sample_.mov",
+                  "#{TARGET}/2005/10/17/sample.mov",
+                  "#{TARGET}/2005/10/28/sample.3g2",
+                  "#{TARGET}/2005/10/28/sample.3gp",
+                  "#{TARGET}/2005/10/28/sample.mp4",
+                  "#{TARGET}/2005/12/20/sample.m4v",
+                  "#{TARGET}/2008/08/29/IMG_002.JPG"]
 
   def setup
+    FileUtils.cp_r "#{TEST_DATA}/.", SOURCE
+    @source_files = Dir["#{SOURCE}/*"].reject { |f| File.directory? f }.sort
+    @source_files_valid_media = @source_files.reject { |f| /noexifdate/ =~ f } 
+
     FileUtils.mkpath "#{SOURCE}/2015"
     FileUtils.mkpath "/tmp/.cache/"
 
@@ -22,20 +36,18 @@ class ImageImportTest < Test::Unit::TestCase
     FileUtils.mkpath "#{SOURCE}/2015/01/"
     FileUtils.mkpath "#{SOURCE}/2017/05/"
 
-    FileUtils.touch "#{SOURCE}/IMG_001.JPG"
+    FileUtils.touch "#{SOURCE}/zero.JPG"
     FileUtils.touch "#{SOURCE}/text.txt"
-    FileUtils.touch "#{SOURCE}/text-.txt"
-    FileUtils.cp "./test/data/IMG_002.JPG", "#{SOURCE}/IMG_002.JPG"
-    FileUtils.cp "./test/data/noexifdate.png", "#{SOURCE}/noexifdate.png"
+    FileUtils.touch "#{SOURCE}/zero.txt"
+
     FileUtils.touch "#{SOURCE}/.cache/IMG_001.JPG"
-    FileUtils.cp "./test/data/IMG_002.JPG", "#{SOURCE}/.cache/IMG_002.JPG"
+    FileUtils.cp_r "#{TEST_DATA}/.", "#{SOURCE}/.cache/"
     FileUtils.touch "#{SOURCE}/.cache/IMG_003.JPG"
 
-    File.expects(:zero?).with("#{SOURCE}/IMG_001.JPG").returns(true)
-    File.expects(:zero?).with("#{SOURCE}/IMG_002.JPG").returns(false)
+    @source_files.each { |sf| File.expects(:zero?).with(sf).returns(false) }
+    File.expects(:zero?).with("#{SOURCE}/zero.JPG").returns(true)
+    File.expects(:zero?).with("#{SOURCE}/zero.txt").returns(true)
     File.expects(:zero?).with("#{SOURCE}/text.txt").returns(false)
-    File.expects(:zero?).with("#{SOURCE}/text-.txt").returns(true)
-    File.expects(:zero?).with("#{SOURCE}/noexifdate.png").returns(false)
 
     FileUtils.mkpath TARGET
   end
@@ -46,7 +58,7 @@ class ImageImportTest < Test::Unit::TestCase
 
   def test_files
     valid_files = files(SOURCE)
-    assert_equal(["#{SOURCE}/IMG_002.JPG", "#{SOURCE}/text.txt", "#{SOURCE}/noexifdate.png"].sort, valid_files.sort)
+    assert_equal((@source_files + ["#{SOURCE}/text.txt"]).sort, valid_files.sort)
   end
 
   def test_files_commandline
@@ -55,12 +67,12 @@ class ImageImportTest < Test::Unit::TestCase
 
     valid_files = `ruby zero-files.rb #{SOURCE}`
     list = valid_files.split("\n").reject { |l| /--/ =~ l || l.empty?}
-    assert_equal(["#{SOURCE}/IMG_002.JPG", "#{SOURCE}/noexifdate.png"].sort, list);
+    assert_equal(@source_files.sort, list);
   end
 
   def test_media
     media = media(SOURCE)
-    assert_equal(["#{SOURCE}/IMG_002.JPG", "#{SOURCE}/noexifdate.png"], media)
+    assert_equal(@source_files, media)
   end
 
   def test_date_dir
@@ -70,17 +82,19 @@ class ImageImportTest < Test::Unit::TestCase
   end
 
   def test_import
-    File.delete(TARGET_FILE) if File.exists? TARGET_FILE
+    TARGET_FILES.each { |f| File.delete(f) if File.exists? f }
 
-    import [SOURCE_FILE], TARGET
-    assert(!File.exists?(SOURCE_FILE))
-    assert(File.exists?(TARGET_PATH))
-    assert(File.exists?(TARGET_FILE))
+    import @source_files, TARGET
+    assert(@source_files_valid_media.all? { |f| !File.exists?(f) })
+    assert(TARGET_FILES.all? { |f| File.exists?(f) })
   end
 
   def test_import_yield
+    source_file = @source_files_valid_media.first
+    target_file = TARGET_FILES.first
+
     moving = nil
-    import [SOURCE_FILE], TARGET do |s,t,e|
+    import [source_file], TARGET do |s,t,e|
       case e
         when :moving
           moving = true
@@ -89,8 +103,8 @@ class ImageImportTest < Test::Unit::TestCase
     assert(moving);
 
     skipping_collision = nil
-    FileUtils.cp TARGET_FILE, SOURCE_FILE
-    import [SOURCE_FILE], TARGET do |s,t,e|
+    FileUtils.cp target_file, source_file
+    import [source_file], TARGET do |s,t,e|
       case e
         when :skipping_collision
           skipping_collision = true
@@ -112,15 +126,10 @@ class ImageImportTest < Test::Unit::TestCase
     media = `ruby import-media.rb`
     assert(media.empty?)
 
-    File.delete(TARGET_FILE) if File.exists? TARGET_FILE
-    File.delete(TARGET_PATH) if File.exists? TARGET_PATH
+    TARGET_FILES.each { |f| File.delete(f) if File.exists? f }
 
     media = `ruby import-media.rb #{SOURCE} #{TARGET}`
-    assert(!File.exists?(SOURCE_FILE))
-    assert(File.exists?(TARGET_PATH))
-    assert(File.exists?(TARGET_FILE))
-  end
-
-  def test_duplicate
+    assert(@source_files_valid_media.all? { |f| !File.exists?(f) })
+    assert(TARGET_FILES.all? { |f| File.exists?(f) })
   end
 end
