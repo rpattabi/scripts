@@ -1,22 +1,29 @@
 require 'find'
 require 'fileutils'
+require 'mimemagic'
 require 'mini_exiftool'
 
 require './zero-files.rb'
 
 def media(dir)
-  # TODO: Implement if more efficiently
-  # May be better approach is to yield
-  files(dir).select { |f| 
-    /^(image|video)/ =~ `file -b --mime-type "#{f}"`
-  }
+  media = []
+  files(dir) do |f|
+    File.open(f, 'r') do |file|
+      filetype = MimeMagic.by_magic(file)
+      next if filetype.nil?
+
+      if filetype.image? || filetype.video? || filetype.audio?
+        yield f, MiniExiftool.new(f) if block_given?
+        media << f
+      end
+    end
+  end
+  media
 end
 
-def import(media, to_dir)
-  media.each { |m|
+def import(from_dir, to_dir)
+  media(from_dir) do |m, exif|
     begin
-      exif = MiniExiftool.new m
- 
       # exif tags from images
       date = exif.DateTimeOriginal
       date = exif.DateTimeDigitized if date.nil?
@@ -50,23 +57,29 @@ def import(media, to_dir)
     rescue Exception => e
       yield m, nil, "exception: #{e.message}\n#{e.backtrace.inspect}"
     end
-  }
+  end
 end
 
 def date_dir(root_dir, date)
     "#{root_dir.chomp('/')}/#{date.year}/#{'%02d' % date.month}/#{'%02d' % date.day}"
 end
 
-unless ARGV[0].nil? || ARGV[1].nil?
+#
+# Commandline Processing
+#
+from_dir = ARGV[0]
+to_dir = ARGV[1]
+
+unless from_dir.nil? || to_dir.nil?
   puts
-  puts "-------- import:start #{Time.now}--------"
+  puts "-------- import:start #{Time.now} --------"
 
   now = Time.now
   timestamp = "#{now.year}-#{now.month}-#{now.day}-#{now.hour}-#{now.min}-#{now.sec}"
-  FileUtils.mkpath ARGV[1]
-  log = File.open("#{ARGV[1].chomp('/')}/import-photos_#{timestamp}.log", 'w')
+  FileUtils.mkpath to_dir
+  log = File.open("#{to_dir.chomp('/')}/import-photos_#{timestamp}.log", 'w')
 
-  import(media(ARGV[0]), ARGV[1]) do |src, tgt, event|
+  import(from_dir, to_dir) do |src, tgt, event|
     msg = nil
 
     case event
@@ -87,7 +100,7 @@ unless ARGV[0].nil? || ARGV[1].nil?
 
   log.close
 
-  puts "-------- import:end #{Time.now}--------"
+  puts "-------- import:end #{Time.now} --------"
   puts
 end
 

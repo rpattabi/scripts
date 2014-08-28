@@ -71,8 +71,13 @@ class ImageImportTest < Test::Unit::TestCase
   end
 
   def test_media
-    media = media(SOURCE)
-    assert_equal(@source_files, media)
+    # check return
+    assert_equal(@source_files, media(SOURCE))
+
+    # check yield
+    media(SOURCE) do |m, exif|
+      assert(@source_files.include?(m))
+    end
   end
 
   def test_date_dir
@@ -84,17 +89,20 @@ class ImageImportTest < Test::Unit::TestCase
   def test_import
     TARGET_FILES.each { |f| File.delete(f) if File.exists? f }
 
-    import @source_files, TARGET
+    import SOURCE, TARGET
     assert(@source_files_valid_media.all? { |f| !File.exists?(f) })
     assert(TARGET_FILES.all? { |f| File.exists?(f) })
   end
 
   def test_import_yield
-    source_file = @source_files_valid_media.first
+    source_t = "#{SOURCE}/#{__method__}"
+    FileUtils.mkpath source_t
+    FileUtils.cp @source_files_valid_media.first, source_t
+
     target_file = TARGET_FILES.first
 
     moving = nil
-    import [source_file], TARGET do |s,t,e|
+    import source_t, TARGET do |s,t,e|
       case e
         when :moving
           moving = true
@@ -103,8 +111,9 @@ class ImageImportTest < Test::Unit::TestCase
     assert(moving);
 
     skipping_collision = nil
-    FileUtils.cp target_file, source_file
-    import [source_file], TARGET do |s,t,e|
+    FileUtils.rm_r "#{source_t}/*"
+    FileUtils.cp target_file, source_t
+    import source_t, TARGET do |s,t,e|
       case e
         when :skipping_collision
           skipping_collision = true
@@ -113,7 +122,9 @@ class ImageImportTest < Test::Unit::TestCase
     assert(skipping_collision);
 
     skipping_noexifdate = nil
-    import ["#{SOURCE}/noexifdate.png"], TARGET do |s,t,e|
+    FileUtils.rm_r "#{source_t}/*"
+    FileUtils.cp "#{SOURCE}/noexifdate.png", source_t
+    import source_t, TARGET do |s,t,e|
       case e
         when :skipping_noexifdate
           skipping_noexifdate = true

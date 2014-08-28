@@ -15,10 +15,12 @@ def files(dir)
         next
       end
     else
-      files << f unless File.zero?(f)
+      unless File.zero?(f) || !File.readable?(f) || File.socket?(f)
+        yield f if block_given?
+        files << f
+      end
     end
   end
-
   files
 end
 
