@@ -13,6 +13,11 @@ Imports photos and videos.
 * Requires `ruby`
 * Runs under `linux` *TODO: Platform Independance*
 
+### Dependencies
+
+* mini_exiftool gem (depends on exiftool library)
+* mocha gem
+
 ### Usage
 
   `ruby import-media.rb source-directory target-directory`
