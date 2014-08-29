@@ -127,6 +127,37 @@ class ImageImportTest < Test::Unit::TestCase
     end
   end
 
+  def test_import_errorhandling
+    source_t = "#{SOURCE}/#{__method__}"
+    FileUtils.mkpath source_t
+    FileUtils.cp @source_files_valid_media.first, source_t
+
+    # faking a failure
+    FileUtils.instance_eval do
+      alias :original_mkpath :mkpath
+
+      @@hit = false
+      def self.mkpath path
+        if @@hit
+          original_mkpath path # so that we don't screw up other tests
+        else
+          @@hit = true
+          raise IOError, 'faking a failure'
+        end
+      end
+    end
+
+    error = false
+    import source_t, TARGET do |s,t,e|
+      case e
+        when :error
+          assert_equal($!.class, IOError)
+          error = true
+      end
+    end
+    assert(error)
+  end
+
   def test_import_commandline
     media = `ruby import-media.rb`
     assert(media.empty?)

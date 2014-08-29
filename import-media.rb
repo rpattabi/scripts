@@ -23,9 +23,27 @@ def media(dir)
 end
 
 def import(from_dir, to_dir)
+  analyze(from_dir, to_dir) do |from, to, event|
+    case event
+    when :okay
+      yield from, to, :moving if block_given?
+      FileUtils.mv from, to
+    when :name_collision
+      yield from, to, :skipping_collision if block_given?
+    when :noexifdate
+      yield from, to, :skipping_noexifdate if block_given?
+    when :error
+      yield from, to, :error if block_given?
+    else
+      #yield from, to, event if block_given?
+    end
+  end
+end
+
+def analyze(from_dir, to_dir)
   media(from_dir) do |m, exif|
     begin
-      # exif tags from images
+      # exif tags from images and avi
       date = exif.DateTimeOriginal
       date = exif.DateTimeDigitized if date.nil?
       date = exif.DateTime if date.nil?
@@ -34,35 +52,30 @@ def import(from_dir, to_dir)
       date = exif.MediaCreateDate if date.nil?
       date = exif.TrackCreateDate if date.nil?
       date = exif.CreateDate if date.nil?
- 
+
       if date.nil?
-        yield m, nil, :skipping_noexifdate if block_given?
+        yield m, nil, :noexifdate if block_given?
         next
       end
- 
+
       date_dir = date_dir(to_dir, date)
       FileUtils.mkpath date_dir
- 
+
       target = "#{date_dir}/#{File.basename(m)}"
- 
+
       if File.exists?(target)
-        yield m, target, :skipping_collision if block_given?
+        yield m, target, :name_collision if block_given?
       else
-        yield m, target, :moving if block_given?
- 
-        #exif.user_comment = "original:#{m}"
-        #exif.save
- 
-        FileUtils.mv m, target
+        yield m, target, :okay if block_given?
       end
-    rescue Exception => e
-      yield m, nil, "exception: #{e.message}\n#{e.backtrace.inspect}"
+    rescue
+      yield m, nil, :error if block_given?
     end
   end
 end
 
 def date_dir(root_dir, date)
-    "#{root_dir.chomp('/')}/#{date.year}/#{'%02d' % date.month}/#{'%02d' % date.day}"
+  "#{root_dir.chomp('/')}/#{date.year}/#{'%02d' % date.month}/#{'%02d' % date.day}"
 end
 
 #
@@ -84,14 +97,16 @@ unless from_dir.nil? || to_dir.nil?
     msg = nil
 
     case event
-      when :moving
-        msg = "Moving.. from: #{src} --> #{tgt}"
-      when :skipping_collision
-        msg = "Skipping.. name collision: #{src} <==> #{tgt}"
-      when :skipping_noexifdate
-        msg = "Skipping.. No exif date: #{src}"
-      else
-        msg = "UNEXPECTED.. src: #{src} tgt: #{tgt} event: #{event}"
+    when :moving
+      msg = "Moving.. from: #{src} --> #{tgt}"
+    when :skipping_collision
+      msg = "Skipping.. name collision: #{src} <==> #{tgt}"
+    when :skipping_noexifdate
+      msg = "Skipping.. No exif date: #{src}"
+    when :error
+      msg = "ERROR.. src: #{src} tgt: #{tgt} event: #{?!.inspect}"
+    else
+      msg = "UNKNOWN_EVENT.. src: #{src} tgt: #{tgt} event: #{event}"
     end
 
     puts msg
