@@ -15,8 +15,8 @@ Imports photos and videos.
 
 ### Dependencies
 
-* mini_exiftool gem (depends on exiftool library)
-* mocha gem
+* `mini_exiftool` gem (depends on exiftool library)
+* `mimemagic` gem
 
 ### Usage
 
