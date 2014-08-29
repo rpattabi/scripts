@@ -85,6 +85,49 @@ class ImageImportTest < Test::Unit::TestCase
     assert(TARGET_FILES.all? { |f| File.exists?(f) })
   end
 
+  def test_analyze_yield
+    source_t = "#{SOURCE}/#{__method__}"
+
+    begin
+      FileUtils.mkpath source_t
+      FileUtils.cp @source_files_valid_media.first, source_t
+
+      okay = false
+      analyze source_t, TARGET do |s,t,e|
+        case e
+          when :okay
+            okay = true
+        end
+      end
+      assert(okay)
+
+      name_collision = false
+      target_file = TARGET_FILES.first
+      source_file = "#{source_t}/#{File.basename(target_file)}"
+      FileUtils.cp source_file, target_file
+      analyze source_t, TARGET do |s,t,e|
+        case e
+          when :name_collision
+            name_collision = true
+        end
+      end
+      assert(name_collision)
+
+      noexifdate = false
+      FileUtils.rm_r Dir["#{source_t}/*"]
+      FileUtils.cp "#{SOURCE}/noexifdate.png", source_t
+      analyze source_t, TARGET do |s,t,e|
+        case e
+          when :noexifdate
+            noexifdate = true
+        end
+      end
+      assert(noexifdate)
+    ensure
+      FileUtils.rm_r source_t if File.exists?(source_t)
+    end
+  end
+
   def test_import_yield
     source_t = "#{SOURCE}/#{__method__}"
 
