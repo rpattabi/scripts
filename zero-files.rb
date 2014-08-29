@@ -10,7 +10,7 @@ def files(dir)
         # prune optimizes find 
         #   by not looking at any files or subfolders of the current directory 
         #   (in our case, hidden directory)
-        Find.prune 
+        Find.prune
       else
         next
       end

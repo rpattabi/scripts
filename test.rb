@@ -1,11 +1,6 @@
+require "test/unit"
 require "./zero-files.rb"
 require "./import-media.rb"
-
-require "rubygems"
-gem "mocha"
-
-require "test/unit"
-require "mocha/test_unit"
 
 class ImageImportTest < Test::Unit::TestCase
   TEST_DATA = "./test/data"
@@ -14,7 +9,7 @@ class ImageImportTest < Test::Unit::TestCase
   @source_files = []
   @source_files_valid_media = []
 
-  TARGET = "#{SOURCE}/imported"
+  TARGET = "/tmp/imported"
   TARGET_FILES = ["#{TARGET}/2008/08/29/IMG_002.JPG",
                   "#{TARGET}/2001/02/19/sample_.mov",
                   "#{TARGET}/2005/10/17/sample.mov",
@@ -37,23 +32,19 @@ class ImageImportTest < Test::Unit::TestCase
     FileUtils.mkpath "#{SOURCE}/2017/05/"
 
     FileUtils.touch "#{SOURCE}/zero.JPG"
-    FileUtils.touch "#{SOURCE}/text.txt"
+    File.open("#{SOURCE}/text.txt", 'w') { |txt_f| txt_f.write 'dummy content' }
     FileUtils.touch "#{SOURCE}/zero.txt"
 
     FileUtils.touch "#{SOURCE}/.cache/IMG_001.JPG"
     FileUtils.cp_r "#{TEST_DATA}/.", "#{SOURCE}/.cache/"
     FileUtils.touch "#{SOURCE}/.cache/IMG_003.JPG"
 
-    @source_files.each { |sf| File.expects(:zero?).with(sf).returns(false) }
-    File.expects(:zero?).with("#{SOURCE}/zero.JPG").returns(true)
-    File.expects(:zero?).with("#{SOURCE}/zero.txt").returns(true)
-    File.expects(:zero?).with("#{SOURCE}/text.txt").returns(false)
-
     FileUtils.mkpath TARGET
   end
 
   def teardown
     FileUtils.rm_r SOURCE
+    FileUtils.rm_r TARGET if File.exists?(TARGET)
   end
 
   def test_files
@@ -67,7 +58,7 @@ class ImageImportTest < Test::Unit::TestCase
 
     valid_files = `ruby zero-files.rb #{SOURCE}`
     list = valid_files.split("\n").reject { |l| /--/ =~ l || l.empty?}
-    assert_equal(@source_files.sort, list);
+    assert_equal((@source_files + ["#{SOURCE}/text.txt"]).sort, list)
   end
 
   def test_media
@@ -96,41 +87,44 @@ class ImageImportTest < Test::Unit::TestCase
 
   def test_import_yield
     source_t = "#{SOURCE}/#{__method__}"
-    FileUtils.mkpath source_t
-    FileUtils.cp @source_files_valid_media.first, source_t
 
-    target_file = TARGET_FILES.first
+    begin
+      FileUtils.mkpath source_t
+      FileUtils.cp @source_files_valid_media.first, source_t
+      target_file = TARGET_FILES.first
 
-    moving = nil
-    import source_t, TARGET do |s,t,e|
-      case e
-        when :moving
-          moving = true
+      moving = false
+      import source_t, TARGET do |s,t,e|
+        case e
+          when :moving
+            moving = true
+        end
       end
-    end
-    assert(moving);
+      assert(moving)
 
-    skipping_collision = nil
-    FileUtils.rm_r "#{source_t}/*"
-    FileUtils.cp target_file, source_t
-    import source_t, TARGET do |s,t,e|
-      case e
-        when :skipping_collision
-          skipping_collision = true
+      skipping_collision = false
+      FileUtils.cp target_file, source_t
+      import source_t, TARGET do |s,t,e|
+        case e
+          when :skipping_collision
+            skipping_collision = true
+        end
       end
-    end
-    assert(skipping_collision);
+      assert(skipping_collision)
 
-    skipping_noexifdate = nil
-    FileUtils.rm_r "#{source_t}/*"
-    FileUtils.cp "#{SOURCE}/noexifdate.png", source_t
-    import source_t, TARGET do |s,t,e|
-      case e
-        when :skipping_noexifdate
-          skipping_noexifdate = true
+      skipping_noexifdate = false
+      FileUtils.rm_r Dir["#{source_t}/*"]
+      FileUtils.cp "#{SOURCE}/noexifdate.png", source_t
+      import source_t, TARGET do |s,t,e|
+        case e
+          when :skipping_noexifdate
+            skipping_noexifdate = true
+        end
       end
+      assert(skipping_noexifdate)
+    ensure
+      FileUtils.rm_r source_t if File.exists?(source_t)
     end
-    assert(skipping_noexifdate);
   end
 
   def test_import_commandline

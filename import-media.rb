@@ -1,5 +1,6 @@
 require 'find'
 require 'fileutils'
+
 require 'mimemagic'
 require 'mini_exiftool'
 
@@ -12,7 +13,7 @@ def media(dir)
       filetype = MimeMagic.by_magic(file)
       next if filetype.nil?
 
-      if filetype.image? || filetype.video? || filetype.audio?
+      if filetype.image? || filetype.video? #|| filetype.audio?
         yield f, MiniExiftool.new(f) if block_given?
         media << f
       end
