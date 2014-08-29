@@ -11,7 +11,7 @@ Imports photos and videos.
 * No Overwriting: Skips media if there's a file with the same name at the target. *TODO: Better Duplicates detection*
 * Writes a neat log at target location everytime this script is invoked.
 * Requires `ruby`
-* Runs under `linux` *TODO: Platform Independance*
+* Tested on `Linux`. Should also work on Windows, Mac, etc.
 
 ### Dependencies
 
