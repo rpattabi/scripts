@@ -28,7 +28,7 @@ unless ARGV[0].nil?
   puts
   puts "----- valid files:start -----"
 
-  puts files(ARGV[0]) 
+  puts files(ARGV[0])
 
   puts "----- valid files:end -----"
   puts

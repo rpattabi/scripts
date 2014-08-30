@@ -1,4 +1,7 @@
-require 'rubygems'
+#require 'rubygems'
+#require 'pry'
+#require 'pry-debugger'
+
 require 'find'
 require 'fileutils'
 
@@ -6,9 +9,6 @@ require 'mimemagic'
 require 'mini_exiftool'
 
 require './zero-files.rb'
-
-require 'pry'
-require 'pry-debugger'
 
 def media_files(dir)
   media = []
