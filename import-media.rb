@@ -173,9 +173,11 @@ unless from_dir.nil? || to_dir.nil?
       msg = "UNKNOWN_EVENT.. src: #{src} tgt: #{tgt} event: #{event}"
     end
 
-    puts msg
-    log.puts msg
-    log.flush
+    unless msg.nil?
+      puts msg 
+      log.puts msg
+      log.flush
+    end
   end
 
   log.close
