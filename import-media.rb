@@ -39,7 +39,7 @@ def import(from_dir, to_dir)
     when :error
       yield from, to, :error if block_given?
     else
-      #yield from, to, event if block_given?
+      yield from, to, event if block_given?
     end
   end
 end
@@ -156,8 +156,10 @@ unless from_dir.nil? || to_dir.nil?
     case event
     when :moving
       msg = "Moving.. from: #{src} --> #{tgt}"
-    when :skipping_collision
-      msg = "Skipping.. name collision: #{src} <==> #{tgt}"
+    when :duplicate_found
+      msg = "Skipping.. duplicate found: #{src} <==> #{tgt}"
+    when :name_collision_found
+      msg = "Renaming.. Name already exists: #{src} <==> #{tgt}"
     when :skipping_noexifdate
       msg = "Skipping.. No exif date: #{src}"
     when :error
