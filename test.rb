@@ -155,21 +155,40 @@ class MediaImportTest < Test::Unit::TestCase
       FileUtils.mkpath source_t
       FileUtils.cp @source_files_valid_media.first, source_t
       target_file = TARGET_FILES.first
+      source_file = "#{source_t}/#{File.basename(target_file)}"
 
       moving = false
       import source_t, TARGET do |s,t,e|
         case e
           when :moving
+            assert_equal(s, source_file)
+            assert_equal(t, target_file)
             moving = true
         end
       end
       assert(moving)
 
+      duplicate_found = false
+      FileUtils.mv target_file, source_file
+      FileUtils.cp source_file, "#{target_file}_1"
+      analyze source_t, TARGET do |s,t,e|
+        case e
+          when :duplicate_found
+            assert_equal(s, source_file)
+            assert_equal(t, "#{target_file}_1")
+            duplicate_found = true
+        end
+      end
+      assert(duplicate_found)
+      File.delete "#{target_file}_1"
+
       name_collision_found = false
-      FileUtils.cp target_file, source_t
-      import source_t, TARGET do |s,t,e|
+      FileUtils.touch target_file
+      analyze source_t, TARGET do |s,t,e|
         case e
           when :name_collision_found
+            assert_equal(s, source_file)
+            assert_equal(t, target_file)
             name_collision_found = true
         end
       end
