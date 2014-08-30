@@ -159,7 +159,8 @@ unless from_dir.nil? || to_dir.nil?
     when :moving
       msg = "Moving.. from: #{src} --> #{tgt}"
     when :skipping
-      msg = "Skipping.. most likely due to duplicate from: #{src} --> #{tgt}"
+      # no need to log. skipping most likely due to duplicate.
+      #msg = "Skipping.. : #{src}"
     when :duplicate_found
       msg = "Skipping.. duplicate found: #{src} <==> #{tgt}"
     when :name_collision_found
