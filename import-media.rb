@@ -32,6 +32,8 @@ def import(from_dir, to_dir)
     when :okay_to_import
       yield from, to, :moving if block_given?
       FileUtils.mv from, to
+    when :Skipping
+      yield from, to, :skipping if block_given?
     when :name_collision_found
       yield from, to, :name_collision_found if block_given?
     when :noexifdate
@@ -156,6 +158,8 @@ unless from_dir.nil? || to_dir.nil?
     case event
     when :moving
       msg = "Moving.. from: #{src} --> #{tgt}"
+    when :skipping
+      msg = "Skipping.. most likely due to duplicate from: #{src} --> #{tgt}"
     when :duplicate_found
       msg = "Skipping.. duplicate found: #{src} <==> #{tgt}"
     when :name_collision_found
