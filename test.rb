@@ -1,8 +1,11 @@
-require "test/unit"
-require "./zero-files.rb"
-require "./import-media.rb"
+require 'test/unit'
+require './zero-files.rb'
+require './import-media.rb'
 
-class ImageImportTest < Test::Unit::TestCase
+require 'pry'
+require 'pry-debugger'
+
+class MediaImportTest < Test::Unit::TestCase
   TEST_DATA = "./test/data"
 
   SOURCE = "/tmp/root"
@@ -63,10 +66,10 @@ class ImageImportTest < Test::Unit::TestCase
 
   def test_media
     # check return
-    assert_equal(@source_files, media(SOURCE))
+    assert_equal(@source_files, media_files(SOURCE))
 
     # check yield
-    media(SOURCE) do |m, exif|
+    media_files(SOURCE) do |m, exif|
       assert(@source_files.include?(m))
     end
   end
@@ -91,27 +94,44 @@ class ImageImportTest < Test::Unit::TestCase
     begin
       FileUtils.mkpath source_t
       FileUtils.cp @source_files_valid_media.first, source_t
-
-      okay = false
-      analyze source_t, TARGET do |s,t,e|
-        case e
-          when :okay
-            okay = true
-        end
-      end
-      assert(okay)
-
-      name_collision = false
       target_file = TARGET_FILES.first
       source_file = "#{source_t}/#{File.basename(target_file)}"
-      FileUtils.cp source_file, target_file
+
+      okay_to_import = false
       analyze source_t, TARGET do |s,t,e|
         case e
-          when :name_collision
-            name_collision = true
+          when :okay_to_import
+            assert_equal(s, source_file)
+            assert_equal(t, target_file)
+            okay_to_import = true
         end
       end
-      assert(name_collision)
+      assert(okay_to_import)
+
+      duplicate_found = false
+      FileUtils.cp source_file, "#{target_file}_1"
+      analyze source_t, TARGET do |s,t,e|
+        case e
+          when :duplicate_found
+            assert_equal(s, source_file)
+            assert_equal(t, "#{target_file}_1")
+            duplicate_found = true
+        end
+      end
+      assert(duplicate_found)
+      File.delete "#{target_file}_1"
+
+      name_collision_found = false
+      FileUtils.touch target_file
+      analyze source_t, TARGET do |s,t,e|
+        case e
+          when :name_collision_found
+            assert_equal(s, source_file)
+            assert_equal(t, target_file)
+            name_collision_found = true
+        end
+      end
+      assert(name_collision_found)
 
       noexifdate = false
       FileUtils.rm_r Dir["#{source_t}/*"]
@@ -145,15 +165,15 @@ class ImageImportTest < Test::Unit::TestCase
       end
       assert(moving)
 
-      skipping_collision = false
+      name_collision_found = false
       FileUtils.cp target_file, source_t
       import source_t, TARGET do |s,t,e|
         case e
-          when :skipping_collision
-            skipping_collision = true
+          when :name_collision_found
+            name_collision_found = true
         end
       end
-      assert(skipping_collision)
+      assert(name_collision_found)
 
       skipping_noexifdate = false
       FileUtils.rm_r Dir["#{source_t}/*"]
