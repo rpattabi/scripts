@@ -8,7 +8,10 @@ Imports photos and videos.
 * Imports media (photos & Videos) to Year/Month/Date directory structure in the target location, according to the media's meta-data (EXIF tags)
 * Only imports media with proper meta-data tags. Skips otherwise.
 * Works fine for JPEG Photos, AVI and QuickTime Videos (MOV, M4V, M2V, MP4, 3GP, 3G2)
-* No Overwriting: Skips media if there's a file with the same name at the target. *TODO: Better Duplicates detection*
+* No Overwriting: Skips media if there's a duplicate based on the
+checksum of file content (SHA256). Also if a file with same name exists,
+and if it is not duplicate, different name will be used while 
+importing.
 * Writes a neat log at target location everytime this script is invoked.
 * Requires `ruby`
 * Tested on `Linux`. Should also work on Windows, Mac, etc.
