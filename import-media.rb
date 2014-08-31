@@ -102,7 +102,7 @@ def compute_target_file_name(src, target_dir)
 
   unless duplicate.nil?
     yield duplicate, :duplicate_found
-    # caller can decide whether to continue or not through block
+    return nil # no need to get unique name if duplicate already exists at target
   end
 
   seed = "#{target_dir}/#{File.basename(src)}"

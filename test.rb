@@ -2,8 +2,8 @@ require 'test/unit'
 require './zero-files.rb'
 require './import-media.rb'
 
-require 'pry'
-require 'pry-debugger'
+#require 'pry'
+#require 'pry-debugger'
 
 class MediaImportTest < Test::Unit::TestCase
   TEST_DATA = "./test/data"
