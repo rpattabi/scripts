@@ -33,3 +33,8 @@ unless ARGV[0].nil?
   puts "----- valid files:end -----"
   puts
 end
+
+def timestamp
+  now = Time.now
+  "#{now.year}-#{'%02d' % now.month}-#{'%02d' % now.day}-#{'%02d' % now.hour}-#{'%02d' % now.min}-#{'%02d' % now.sec}"
+end

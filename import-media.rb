@@ -145,10 +145,8 @@ to_dir = ARGV[1]
 
 unless from_dir.nil? || to_dir.nil?
   puts
-  puts "-------- import:start #{Time.now} --------"
+  puts "-------- import:start #{timestamp} --------"
 
-  now = Time.now
-  timestamp = "#{now.year}-#{now.month}-#{now.day}-#{now.hour}-#{now.min}-#{now.sec}"
   FileUtils.mkpath to_dir
   log = File.open("#{to_dir.chomp('/')}/import-photos_#{timestamp}.log", 'w')
 
@@ -182,7 +180,7 @@ unless from_dir.nil? || to_dir.nil?
 
   log.close
 
-  puts "-------- import:end #{Time.now} --------"
+  puts "-------- import:end #{timestamp} --------"
   puts
 end
 

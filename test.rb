@@ -250,4 +250,14 @@ class MediaImportTest < Test::Unit::TestCase
     assert(@source_files_valid_media.all? { |f| !File.exists?(f) })
     assert(TARGET_FILES.all? { |f| File.exists?(f) })
   end
+
+  def test_timestamp
+    Time.class_eval do
+      def self.now
+        DateTime.parse '2014-09-02 06:44:48 +0530'
+      end
+    end
+
+    assert_equal(timestamp, '2014-09-02-06-44-48')
+  end
 end
