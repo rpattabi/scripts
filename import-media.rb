@@ -137,6 +137,10 @@ def date_dir(root_dir, date)
   "#{root_dir.chomp('/')}/#{date.year}/#{'%02d' % date.month}/#{'%02d' % date.day}"
 end
 
+def timestamp(datetime)
+  "#{datetime.year}-#{'%02d' % datetime.month}-#{'%02d' % datetime.day}-#{'%02d' % datetime.hour}-#{'%02d' % datetime.min}-#{'%02d' % datetime.sec}"
+end
+
 #
 # Commandline Processing
 #
@@ -145,10 +149,10 @@ to_dir = ARGV[1]
 
 unless from_dir.nil? || to_dir.nil?
   puts
-  puts "-------- import:start #{timestamp} --------"
+  puts "-------- import:start #{timestamp(Time.now)} --------"
 
   FileUtils.mkpath to_dir
-  log = File.open("#{to_dir.chomp('/')}/import-photos_#{timestamp}.log", 'w')
+  log = File.open("#{to_dir.chomp('/')}/import-photos_#{timestamp(Time.now)}.log", 'w')
 
   import(from_dir, to_dir) do |src, tgt, event|
     msg = nil
@@ -180,7 +184,7 @@ unless from_dir.nil? || to_dir.nil?
 
   log.close
 
-  puts "-------- import:end #{timestamp} --------"
+  puts "-------- import:end #{timestamp(Time.now)} --------"
   puts
 end
 

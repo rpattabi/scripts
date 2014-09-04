@@ -252,12 +252,7 @@ class MediaImportTest < Test::Unit::TestCase
   end
 
   def test_timestamp
-    Time.class_eval do
-      def self.now
-        DateTime.parse '2014-09-02 06:44:48 +0530'
-      end
-    end
-
-    assert_equal(timestamp, '2014-09-02-06-44-48')
+    datetime = Time.parse('2014-09-02 06:44:48 +0530')
+    assert_equal(timestamp(datetime), '2014-09-02-06-44-48')
   end
 end
