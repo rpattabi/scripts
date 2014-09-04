@@ -148,11 +148,13 @@ from_dir = ARGV[0]
 to_dir = ARGV[1]
 
 unless from_dir.nil? || to_dir.nil?
+  start_time = Time.now
+
   puts
-  puts "-------- import:start #{timestamp(Time.now)} --------"
+  puts "#{start_time}: Import Started..."
 
   FileUtils.mkpath to_dir
-  log = File.open("#{to_dir.chomp('/')}/import-photos_#{timestamp(Time.now)}.log", 'w')
+  log = File.open("#{to_dir.chomp('/')}/import-photos_#{timestamp(start_time)}.log", 'w')
 
   import(from_dir, to_dir) do |src, tgt, event|
     msg = nil
@@ -176,15 +178,26 @@ unless from_dir.nil? || to_dir.nil?
     end
 
     unless msg.nil?
-      puts msg 
+      puts msg
       log.puts msg
       log.flush
     end
   end
 
+  end_time = Time.now
+
+  conclusion = <<END
+
+---------------------------------------------------
+Import started on : #{start_time}
+Import ended on   : #{end_time}
+---------------------------------------------------
+
+END
+
+  log.puts conclusion
   log.close
 
-  puts "-------- import:end #{timestamp(Time.now)} --------"
-  puts
+  puts conclusion
 end
 

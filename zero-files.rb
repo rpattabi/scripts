@@ -24,6 +24,7 @@ def files(dir)
   files
 end
 
+=begin
 unless ARGV[0].nil?
   puts
   puts "----- valid files:start -----"
@@ -33,3 +34,4 @@ unless ARGV[0].nil?
   puts "----- valid files:end -----"
   puts
 end
+=end
