@@ -40,7 +40,10 @@ def import(from_dir, to_dir)
       yield from, to, :moving_noexifdate if block_given?
       FileUtils.mv from, to
 
-      open("#{to}.log", 'w') do 
+      open("#{to}.log", 'w') do |f|
+        f.puts "original path: #{from}"
+        f.puts "siblings at the time of import:"
+        f.puts `ls #{File.dirname(from)}`
       end
     when :error
       yield from, to, :error if block_given?
@@ -178,6 +181,12 @@ unless from_dir.nil? || to_dir.nil?
       msg = "Moving.. from: #{src} --> #{tgt}"
     when :moving_noexifdate
       msg = "Moving.. (No exif date) from: #{src} --> #{tgt}"
+
+      open("#{to}.log", 'w') do |undated_log|
+        undated_log.puts "original path: #{from}"
+        undated_log.puts "siblings at the time of import (source dir):"
+        undated_log.puts `ls #{File.dirname(from)}`
+      end
     when :skipping
       # no need to log. skipping most likely due to duplicate.
       #msg = "Skipping.. : #{src}"
