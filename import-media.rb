@@ -38,6 +38,10 @@ def import(from_dir, to_dir)
       yield from, to, :name_collision_found if block_given?
     when :noexifdate
       yield from, to, :moving_noexifdate if block_given?
+      FileUtils.mv from, to
+
+      open("#{to}.log", 'w') do 
+      end
     when :error
       yield from, to, :error if block_given?
     else
