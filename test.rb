@@ -260,7 +260,7 @@ class MediaImportTest < Test::Unit::TestCase
     target_dir = "/tmp/#{__method__}"
 
     begin
-      file_names = ["IMG_02.JPG", "IMG_02.JPG_1", "IMG_02_1.jpg", "IMG_02_2.JPG"]
+      file_names = ["IMG_02.JPG", "IMG_02.JPG_1", "IMG_02_1.JPG", "IMG_02_2.JPG"]
 
       FileUtils.mkpath target_dir
       file_names.each do |fn|
@@ -268,15 +268,15 @@ class MediaImportTest < Test::Unit::TestCase
       end
 
       colliding_names = []
-      unique = unique_file_name(target_dir, "#{target_dir}/IMG_02.JPG") do |colliding_name, event|
+      unique = unique_file_name(target_dir, "IMG_02.JPG") do |colliding_name, event|
         case event
         when :name_collision_found
           colliding_names << File.basename(colliding_name)
         end
       end
 
+      assert_equal("#{target_dir}/IMG_02_3.JPG", unique)
       assert_equal((file_names - ["IMG_02.JPG_1"]).sort, colliding_names.sort)
-      assert_equal("#{target_dir}/iMG_02_3.JPG", unique)
     ensure
       FileUtils.rm_r target_dir
     end

@@ -105,7 +105,7 @@ def compute_target_file_name(src, target_dir)
     return nil # no need to get unique name if duplicate already exists at target
   end
 
-  seed = "#{target_dir}/#{File.basename(src)}"
+  seed = File.basename(src)
   target_file_name = unique_file_name(target_dir, seed) do |colliding_name|
     yield colliding_name, :name_collision_found
   end
@@ -123,14 +123,18 @@ end
 def unique_file_name(dir, seed_file_name)
   suffix = 1
 
-  while File.exists?(seed_file_name)
-    yield seed_file_name, :name_collision_found
+  ext = File.extname(seed_file_name)
+  seed_fullpath = "#{dir}/#{seed_file_name}"
+  basename_noext = File.basename(seed_file_name, ext)
 
-    seed_file_name += "_#{suffix}"
+  while File.exists?(seed_fullpath)
+    yield seed_fullpath, :name_collision_found
+
+    seed_fullpath = "#{dir}/#{basename_noext}_#{suffix}#{ext}" # ext includes dot
     suffix += 1
   end
 
-  seed_file_name
+  seed_fullpath
 end
 
 def date_dir(root_dir, date)
