@@ -50,12 +50,14 @@ def analyze(from_dir, to_dir)
   media_files(from_dir) do |media_file|
     begin
       date = date(media_file)
+
+      target_dir = nil
       if date.nil?
-        yield media_file, nil, :noexifdate
-        next
+        target_dir = "#{to_dir}/undated"
+      else
+        target_dir = date_dir(to_dir, date)
       end
 
-      target_dir = date_dir(to_dir, date)
       FileUtils.mkpath target_dir
 
       target = compute_target_file_name(media_file, target_dir) do |existing_target_file, event|
@@ -73,7 +75,11 @@ def analyze(from_dir, to_dir)
         # we would have already raised :duplicate.
         yield media_file, nil, :skipping
       else
-        yield media_file, target, :okay_to_import
+        if date.nil?
+          yield media_file, target, :noexifdate
+        else
+          yield media_file, target, :okay_to_import
+        end
       end
     rescue
       yield media_file, nil, :error

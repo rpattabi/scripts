@@ -13,6 +13,7 @@ class MediaImportTest < Test::Unit::TestCase
   @source_files_valid_media = []
 
   TARGET = "/tmp/imported"
+  TARGET_UNDATED = "/tmp/imported/undated"
   TARGET_FILES = ["#{TARGET}/2008/08/29/IMG_002.JPG",
                   "#{TARGET}/2001/02/19/sample_.mov",
                   "#{TARGET}/2005/10/17/sample.mov",
@@ -295,10 +296,13 @@ class MediaImportTest < Test::Unit::TestCase
         case e
           when :moving_noexifdate
             moving_noexifdate = true
+            assert_equal("#{source_t}/noexifdate.png", s)
+            assert_equal("#{TARGET_UNDATED}/noexifdate.png", t)
         end
       end
       assert(moving_noexifdate)
-
+      assert(File.exists?("#{TARGET_UNDATED}/noexifdate.png"))
+      assert(File.exists?("#{TARGET_UNDATED}/noexifdate.png.log"))
     ensure
       FileUtils.rm_r source_t if File.exists?(source_t)
     end
