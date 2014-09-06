@@ -196,16 +196,16 @@ class MediaImportTest < Test::Unit::TestCase
       end
       assert(name_collision_found)
 
-      skipping_noexifdate = false
+      moving_noexifdate = false
       FileUtils.rm_r Dir["#{source_t}/*"]
       FileUtils.cp "#{SOURCE}/noexifdate.png", source_t
       import source_t, TARGET do |s,t,e|
         case e
-          when :skipping_noexifdate
-            skipping_noexifdate = true
+          when :moving_noexifdate
+            moving_noexifdate = true
         end
       end
-      assert(skipping_noexifdate)
+      assert(moving_noexifdate)
     ensure
       FileUtils.rm_r source_t if File.exists?(source_t)
     end
@@ -281,6 +281,26 @@ class MediaImportTest < Test::Unit::TestCase
       assert_equal((file_names - ["IMG_02.JPG_1"]).sort, colliding_names.sort)
     ensure
       FileUtils.rm_r target_dir
+    end
+  end
+
+  def test_import_noexifdate
+    source_t = "#{SOURCE}/#{__method__}"
+
+    begin
+      moving_noexifdate = false
+      FileUtils.mkpath source_t
+      FileUtils.cp "#{SOURCE}/noexifdate.png", source_t
+      import source_t, TARGET do |s,t,e|
+        case e
+          when :moving_noexifdate
+            moving_noexifdate = true
+        end
+      end
+      assert(moving_noexifdate)
+
+    ensure
+      FileUtils.rm_r source_t if File.exists?(source_t)
     end
   end
 end

@@ -37,7 +37,7 @@ def import(from_dir, to_dir)
     when :name_collision_found
       yield from, to, :name_collision_found if block_given?
     when :noexifdate
-      yield from, to, :skipping_noexifdate if block_given?
+      yield from, to, :moving_noexifdate if block_given?
     when :error
       yield from, to, :error if block_given?
     else
@@ -166,6 +166,8 @@ unless from_dir.nil? || to_dir.nil?
     case event
     when :moving
       msg = "Moving.. from: #{src} --> #{tgt}"
+    when :moving_noexifdate
+      msg = "Moving.. (No exif date) from: #{src} --> #{tgt}"
     when :skipping
       # no need to log. skipping most likely due to duplicate.
       #msg = "Skipping.. : #{src}"
@@ -173,8 +175,6 @@ unless from_dir.nil? || to_dir.nil?
       msg = "Skipping.. duplicate found: #{src} <==> #{tgt}"
     when :name_collision_found
       msg = "Renaming.. Name already exists: #{src} <==> #{tgt}"
-    when :skipping_noexifdate
-      msg = "Skipping.. No exif date: #{src}"
     when :error
       msg = "ERROR.. src: #{src} tgt: #{tgt} event: #{?!.inspect}"
     else
