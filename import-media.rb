@@ -30,15 +30,25 @@ def import(from_dir, to_dir, operation=:move)
   analyze(from_dir, to_dir) do |from, to, event|
     case event
     when :okay_to_import
-      yield from, to, :moving if block_given?
-      FileUtils.mv from, to
+      if (operation == :move)
+        yield from, to, :moving if block_given?
+        FileUtils.mv from, to
+      elsif (operation == :copy)
+        yield from, to, :copying if block_given?
+        FileUtils.cp from, to
+      end
     when :Skipping
       yield from, to, :skipping if block_given?
     when :name_collision_found
       yield from, to, :name_collision_found if block_given?
     when :noexifdate
-      yield from, to, :moving_noexifdate if block_given?
-      FileUtils.mv from, to
+      if (operation == :move)
+        yield from, to, :moving_noexifdate if block_given?
+        FileUtils.mv from, to
+      elsif (operation == :copy)
+        yield from, to, :copying_noexifdate if block_given?
+        FileUtils.cp from, to
+      end
 
       open("#{to}.log", 'w') do |f|
         f.puts "original path: #{from}"
@@ -200,8 +210,18 @@ begin
       case event
       when :moving
         msg = "Moving.. from: #{src} --> #{tgt}"
+      when :copying
+        msg = "Copying.. from: #{src} --> #{tgt}"
       when :moving_noexifdate
         msg = "Moving.. (No exif date) from: #{src} --> #{tgt}"
+
+        open("#{to}.log", 'w') do |undated_log|
+          undated_log.puts "original path: #{from}"
+          undated_log.puts "siblings at the time of import (source dir):"
+          undated_log.puts `ls #{File.dirname(from)}`
+        end
+      when :copying_noexifdate
+        msg = "Copying.. (No exif date) from: #{src} --> #{tgt}"
 
         open("#{to}.log", 'w') do |undated_log|
           undated_log.puts "original path: #{from}"

@@ -249,6 +249,15 @@ class MediaImportTest < Test::Unit::TestCase
 
     missing_src = `ruby import-media.rb /tmp`
     assert(/Usage:/ =~ missing_src)
+
+    missing_src = `ruby import-media.rb -mv /tmp /tmp/tgt/ --copy`
+    assert(/Usage:/ =~ missing_src)
+
+    missing_src = `ruby import-media.rb -mv -cp /tmp /tmp/tgt/`
+    assert(/Usage:/ =~ missing_src)
+
+    missing_src = `ruby import-media.rb -cp /tmp /tmp/tgt/ -mv`
+    assert(/Usage:/ =~ missing_src)
   end
 
   def test_import_commandline_help
@@ -302,6 +311,41 @@ class MediaImportTest < Test::Unit::TestCase
 
     `ruby import-media.rb #{SOURCE} #{TARGET} --move`
     assert(@source_files_valid_media.all? { |f| !File.exists?(f) })
+    assert(TARGET_FILES.all? { |f| File.exists?(f) })
+  end
+
+  def test_import_commandline_copy
+    # copy option
+    TARGET_FILES.each { |f| File.delete(f) if File.exists? f }
+
+    `ruby import-media.rb --copy #{SOURCE} #{TARGET}`
+    assert(@source_files_valid_media.all? { |f| File.exists?(f) })
+    assert(TARGET_FILES.all? { |f| File.exists?(f) })
+
+    # mv option
+    teardown
+    setup
+    TARGET_FILES.each { |f| File.delete(f) if File.exists? f }
+
+    `ruby import-media.rb -cp #{SOURCE} #{TARGET}`
+    assert(@source_files_valid_media.all? { |f| File.exists?(f) })
+    assert(TARGET_FILES.all? { |f| File.exists?(f) })
+
+    # option at different place
+    teardown
+    setup
+    TARGET_FILES.each { |f| File.delete(f) if File.exists? f }
+
+    `ruby import-media.rb #{SOURCE} -cp #{TARGET}`
+    assert(@source_files_valid_media.all? { |f| File.exists?(f) })
+    assert(TARGET_FILES.all? { |f| File.exists?(f) })
+
+    teardown
+    setup
+    TARGET_FILES.each { |f| File.delete(f) if File.exists? f }
+
+    `ruby import-media.rb #{SOURCE} #{TARGET} --copy`
+    assert(@source_files_valid_media.all? { |f| File.exists?(f) })
     assert(TARGET_FILES.all? { |f| File.exists?(f) })
   end
 
