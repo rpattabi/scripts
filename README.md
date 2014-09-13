@@ -4,7 +4,8 @@
 
 Imports photos and videos.
 
-* **WARNING** *Moves* the photos and videos. *TODO: option to copy instead.*
+* WARNING: By default it moves the files to target. Copy option is also
+available.
 * Imports media (photos & Videos) to Year/Month/Date directory structure in the target location, according to the media's meta-data (EXIF tags)
 * Only imports media with proper meta-data tags. Skips otherwise.
 * Works fine for JPEG Photos, AVI and QuickTime Videos (MOV, M4V, M2V, MP4, 3GP, 3G2)
@@ -20,10 +21,11 @@ importing.
 
 * `mini_exiftool` gem (depends on exiftool library)
 * `mimemagic` gem
+* `docopt` gem
 
 ### Usage
 
-  `ruby import-media.rb source-directory target-directory`
+  `ruby import-media.rb [-cp | -mv] source-directory target-directory`
 
 ## zero-files.rb
 
