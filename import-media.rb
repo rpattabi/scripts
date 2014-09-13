@@ -163,7 +163,7 @@ end
 #
 require 'docopt'
 
-usage = <<DOCOPT
+USAGE = <<DOCOPT
 Imports media (photos, videos) according to exif date information.
 
 Usage:
@@ -176,7 +176,7 @@ Options:
 DOCOPT
 
 begin
-  cmdline = Docopt::docopt(usage)
+  cmdline = Docopt::docopt(USAGE)
 
   from_dir = cmdline['<source_path>'].chomp('/').chomp('\\')
   to_dir =cmdline['<target_path>'].chomp('/').chomp('\\')

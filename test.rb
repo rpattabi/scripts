@@ -243,7 +243,7 @@ class MediaImportTest < Test::Unit::TestCase
     assert(error)
   end
 
-  def test_import_commandline_default
+  def test_import_commandline_error
     usage = "Usage:\n  import-media.rb <source_path> <target_path>\n"
 
     missing_src_tgt = `ruby import-media.rb`
@@ -251,15 +251,29 @@ class MediaImportTest < Test::Unit::TestCase
 
     missing_src = `ruby import-media.rb /tmp`
     assert_equal(usage, missing_src)
+  end
 
+  def test_import_commandline_help
+    usage = USAGE.gsub(/([^ ]+)(import-media.rb)/, '\2') # removing path
+
+    help = `ruby import-media.rb -h`
+    assert_equal(usage, help)
+
+    help = `ruby import-media.rb --help`
+    assert_equal(usage, help)
+  end
+
+  def test_import_commandline_move
+    # default option is move
     TARGET_FILES.each { |f| File.delete(f) if File.exists? f }
 
     `ruby import-media.rb #{SOURCE} #{TARGET}`
     assert(@source_files_valid_media.all? { |f| !File.exists?(f) })
     assert(TARGET_FILES.all? { |f| File.exists?(f) })
-  end
 
-  def test_import_commandline_options
+    # --move
+    # -mv
+    # option at different place
   end
 
   def test_timestamp
