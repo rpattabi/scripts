@@ -243,15 +243,22 @@ class MediaImportTest < Test::Unit::TestCase
     assert(error)
   end
 
-  def test_import_commandline
+  def test_import_commandline_default
+    usage = "Usage:\n  import-media.rb <source_path> <target_path>\n"
+
     media = `ruby import-media.rb`
-    assert_equal("Usage:\n  import-media.rb <source_path> <target_path>\n", media)
+    assert_equal(usage, media)
+    media = `ruby import-media.rb /tmp`
+    assert_equal(usage, media)
 
     TARGET_FILES.each { |f| File.delete(f) if File.exists? f }
 
     media = `ruby import-media.rb #{SOURCE} #{TARGET}`
     assert(@source_files_valid_media.all? { |f| !File.exists?(f) })
     assert(TARGET_FILES.all? { |f| File.exists?(f) })
+  end
+
+  def test_import_commandline_options
   end
 
   def test_timestamp
