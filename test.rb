@@ -271,9 +271,32 @@ class MediaImportTest < Test::Unit::TestCase
     assert(@source_files_valid_media.all? { |f| !File.exists?(f) })
     assert(TARGET_FILES.all? { |f| File.exists?(f) })
 
-    # --move
-    # -mv
+    # move option
+    TARGET_FILES.each { |f| File.delete(f) if File.exists? f }
+
+    `ruby import-media.rb --move #{SOURCE} #{TARGET}`
+    assert(@source_files_valid_media.all? { |f| !File.exists?(f) })
+    assert(TARGET_FILES.all? { |f| File.exists?(f) })
+
+    # mv option
+    TARGET_FILES.each { |f| File.delete(f) if File.exists? f }
+
+    `ruby import-media.rb -mv #{SOURCE} #{TARGET}`
+    assert(@source_files_valid_media.all? { |f| !File.exists?(f) })
+    assert(TARGET_FILES.all? { |f| File.exists?(f) })
+
     # option at different place
+    TARGET_FILES.each { |f| File.delete(f) if File.exists? f }
+
+    `ruby import-media.rb #{SOURCE} -mv #{TARGET}`
+    assert(@source_files_valid_media.all? { |f| !File.exists?(f) })
+    assert(TARGET_FILES.all? { |f| File.exists?(f) })
+
+    TARGET_FILES.each { |f| File.delete(f) if File.exists? f }
+
+    `ruby import-media.rb #{SOURCE} #{TARGET} --move`
+    assert(@source_files_valid_media.all? { |f| !File.exists?(f) })
+    assert(TARGET_FILES.all? { |f| File.exists?(f) })
   end
 
   def test_timestamp
