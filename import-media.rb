@@ -1,4 +1,4 @@
-#require 'rubygems'
+
 #require 'pry'
 #require 'pry-debugger'
 
@@ -161,55 +161,72 @@ end
 #
 # Commandline Processing
 #
-from_dir = ARGV[0]
-to_dir = ARGV[1]
+require 'docopt'
 
-unless from_dir.nil? || to_dir.nil?
-  start_time = Time.now
+usage = <<DOCOPT
+Imports media (photos, videos) according to exif date information.
 
-  puts
-  puts "#{start_time}: Import Started..."
+Usage:
+  #{__FILE__} <source_path> <target_path>
 
-  FileUtils.mkpath to_dir
-  log = File.open("#{to_dir.chomp('/')}/import-photos_#{timestamp(start_time)}.log", 'w')
+Options:
+  -h --help      Shows this screen
+  <source_path>  Source root directory with media to import
+  <target_path>  Target root directory
+DOCOPT
 
-  import(from_dir, to_dir) do |src, tgt, event|
-    msg = nil
+begin
+  cmdline = Docopt::docopt(usage)
 
-    case event
-    when :moving
-      msg = "Moving.. from: #{src} --> #{tgt}"
-    when :moving_noexifdate
-      msg = "Moving.. (No exif date) from: #{src} --> #{tgt}"
+  from_dir = cmdline['<source_path>'].chomp('/').chomp('\\')
+  to_dir =cmdline['<target_path>'].chomp('/').chomp('\\')
 
-      open("#{to}.log", 'w') do |undated_log|
-        undated_log.puts "original path: #{from}"
-        undated_log.puts "siblings at the time of import (source dir):"
-        undated_log.puts `ls #{File.dirname(from)}`
+  unless from_dir.nil? || to_dir.nil?
+    start_time = Time.now
+
+    puts
+    puts "#{start_time}: Import Started..."
+
+    FileUtils.mkpath to_dir
+    log = File.open("#{to_dir}/import-photos_#{timestamp(start_time)}.log", 'w')
+
+    import(from_dir, to_dir) do |src, tgt, event|
+      msg = nil
+
+      case event
+      when :moving
+        msg = "Moving.. from: #{src} --> #{tgt}"
+      when :moving_noexifdate
+        msg = "Moving.. (No exif date) from: #{src} --> #{tgt}"
+
+        open("#{to}.log", 'w') do |undated_log|
+          undated_log.puts "original path: #{from}"
+          undated_log.puts "siblings at the time of import (source dir):"
+          undated_log.puts `ls #{File.dirname(from)}`
+        end
+      when :skipping
+        # no need to log. skipping most likely due to duplicate.
+        #msg = "Skipping.. : #{src}"
+      when :duplicate_found
+        msg = "Skipping.. duplicate found: #{src} <==> #{tgt}"
+      when :name_collision_found
+        msg = "Renaming.. Name already exists: #{src} <==> #{tgt}"
+      when :error
+        msg = "ERROR.. src: #{src} tgt: #{tgt} event: #{?!.inspect}"
+      else
+        msg = "UNKNOWN_EVENT.. src: #{src} tgt: #{tgt} event: #{event}"
       end
-    when :skipping
-      # no need to log. skipping most likely due to duplicate.
-      #msg = "Skipping.. : #{src}"
-    when :duplicate_found
-      msg = "Skipping.. duplicate found: #{src} <==> #{tgt}"
-    when :name_collision_found
-      msg = "Renaming.. Name already exists: #{src} <==> #{tgt}"
-    when :error
-      msg = "ERROR.. src: #{src} tgt: #{tgt} event: #{?!.inspect}"
-    else
-      msg = "UNKNOWN_EVENT.. src: #{src} tgt: #{tgt} event: #{event}"
+
+      unless msg.nil?
+        puts msg
+        log.puts msg
+        log.flush
+      end
     end
 
-    unless msg.nil?
-      puts msg
-      log.puts msg
-      log.flush
-    end
-  end
+    end_time = Time.now
 
-  end_time = Time.now
-
-  conclusion = <<END
+    conclusion = <<END
 
 ---------------------------------------------------
 Import started on : #{start_time}
@@ -218,9 +235,13 @@ Import ended on   : #{end_time}
 
 END
 
-  log.puts conclusion
-  log.close
+    log.puts conclusion
+    log.close
 
-  puts conclusion
+    puts conclusion
+  end
+rescue Docopt::Exit => e
+  puts e.message
 end
+
 

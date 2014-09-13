@@ -245,7 +245,7 @@ class MediaImportTest < Test::Unit::TestCase
 
   def test_import_commandline
     media = `ruby import-media.rb`
-    assert(media.empty?)
+    assert_equal("Usage:\n  import-media.rb <source_path> <target_path>\n", media)
 
     TARGET_FILES.each { |f| File.delete(f) if File.exists? f }
 
