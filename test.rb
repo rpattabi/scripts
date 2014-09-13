@@ -26,7 +26,7 @@ class MediaImportTest < Test::Unit::TestCase
   def setup
     FileUtils.cp_r "#{TEST_DATA}/.", SOURCE
     @source_files = Dir["#{SOURCE}/*"].reject { |f| File.directory? f }.sort
-    @source_files_valid_media = @source_files.reject { |f| /noexifdate/ =~ f } 
+    @source_files_valid_media = @source_files.reject { |f| /noexifdate/ =~ f }
 
     FileUtils.mkpath "#{SOURCE}/2015"
     FileUtils.mkpath "/tmp/.cache/"
@@ -270,6 +270,8 @@ class MediaImportTest < Test::Unit::TestCase
     assert(TARGET_FILES.all? { |f| File.exists?(f) })
 
     # move option
+    teardown
+    setup
     TARGET_FILES.each { |f| File.delete(f) if File.exists? f }
 
     `ruby import-media.rb --move #{SOURCE} #{TARGET}`
@@ -277,6 +279,8 @@ class MediaImportTest < Test::Unit::TestCase
     assert(TARGET_FILES.all? { |f| File.exists?(f) })
 
     # mv option
+    teardown
+    setup
     TARGET_FILES.each { |f| File.delete(f) if File.exists? f }
 
     `ruby import-media.rb -mv #{SOURCE} #{TARGET}`
@@ -284,12 +288,16 @@ class MediaImportTest < Test::Unit::TestCase
     assert(TARGET_FILES.all? { |f| File.exists?(f) })
 
     # option at different place
+    teardown
+    setup
     TARGET_FILES.each { |f| File.delete(f) if File.exists? f }
 
     `ruby import-media.rb #{SOURCE} -mv #{TARGET}`
     assert(@source_files_valid_media.all? { |f| !File.exists?(f) })
     assert(TARGET_FILES.all? { |f| File.exists?(f) })
 
+    teardown
+    setup
     TARGET_FILES.each { |f| File.delete(f) if File.exists? f }
 
     `ruby import-media.rb #{SOURCE} #{TARGET} --move`
