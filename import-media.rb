@@ -168,11 +168,13 @@ Imports media (photos, videos) according to exif date information.
 
 Usage:
   #{__FILE__} <source_path> <target_path>
+  #{__FILE__} [--move | -mv] <source_path> <target_path>
 
 Options:
   -h --help      Shows this screen
   <source_path>  Source root directory with media to import
   <target_path>  Target root directory
+  -mv --move     Moves media at the source_path to target_path (according to the exif date) recursively.
 DOCOPT
 
 begin

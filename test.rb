@@ -244,13 +244,11 @@ class MediaImportTest < Test::Unit::TestCase
   end
 
   def test_import_commandline_error
-    usage = "Usage:\n  import-media.rb <source_path> <target_path>\n"
-
     missing_src_tgt = `ruby import-media.rb`
-    assert_equal(usage, missing_src_tgt)
+    assert(/Usage:/ =~ missing_src_tgt)
 
     missing_src = `ruby import-media.rb /tmp`
-    assert_equal(usage, missing_src)
+    assert(/Usage:/ =~ missing_src)
   end
 
   def test_import_commandline_help
