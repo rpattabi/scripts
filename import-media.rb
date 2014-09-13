@@ -26,7 +26,7 @@ def media_files(dir)
   media
 end
 
-def import(from_dir, to_dir)
+def import(from_dir, to_dir, operation=:move)
   analyze(from_dir, to_dir) do |from, to, event|
     case event
     when :okay_to_import
@@ -183,6 +183,7 @@ begin
 
   from_dir = cmdline['<source_path>'].chomp('/').chomp('\\')
   to_dir =cmdline['<target_path>'].chomp('/').chomp('\\')
+  operation = cmdline['--copy'] ? :copy : :move
 
   unless from_dir.nil? || to_dir.nil?
     start_time = Time.now
@@ -193,7 +194,7 @@ begin
     FileUtils.mkpath to_dir
     log = File.open("#{to_dir}/import-photos_#{timestamp(start_time)}.log", 'w')
 
-    import(from_dir, to_dir) do |src, tgt, event|
+    import(from_dir, to_dir, operation) do |src, tgt, event|
       msg = nil
 
       case event
