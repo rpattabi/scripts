@@ -7,8 +7,21 @@ require 'fileutils'
 
 require 'mimemagic'
 require 'mini_exiftool'
+require 'memoist'
 
 require './zero-files.rb'
+
+class Speed
+  class << self
+    extend Memoist
+
+    def checksum(file)
+      Digest::SHA2.file(file)
+    end
+
+    memoize :checksum
+  end
+end
 
 def media_files(dir)
   media = []
@@ -27,6 +40,7 @@ def media_files(dir)
 end
 
 def import(from_dir, to_dir)
+  #binding.pry
   analyze(from_dir, to_dir) do |from, to, event|
     case event
     when :okay_to_import
@@ -115,7 +129,7 @@ end
 
 def find_duplicate(src, target_dir)
   Dir["#{target_dir}/*"].each do |target|
-    return target if Digest::SHA2.file(src) == Digest::SHA2.file(target)
+    return target if Speed.checksum(src) == Speed.checksum(target)
   end
   nil
 end
