@@ -199,14 +199,14 @@ Imports media (photos, videos) according to exif date information.
 
 Usage:
   #{__FILE__} <source_path> <target_path>
-  #{__FILE__} [(--move | -mv) | (--copy | -cp)] <source_path> <target_path>
+  #{__FILE__} [(--copy | -cp) | (--move | -mv)] <source_path> <target_path>
 
 Options:
-  -h --help      Shows this screen
-  <source_path>  Source root directory with media to import
-  <target_path>  Target root directory
-  -mv --move     Moves media at the source_path to target_path (according to the exif date) recursively.
-  -cv --copy     Copies media at the source_path to target_path (according to the exif date) recursively.
+  -h --help              Shows this screen
+  <source_path>          Source root directory with media to import
+  <target_path>          Target root directory
+  -cp --copy             Default. Copies media at the source_path to target_path (according to the exif date) recursively.
+  -mv --move             Moves media at the source_path to target_path (according to the exif date) recursively.
 DOCOPT
 
 begin
@@ -214,8 +214,9 @@ begin
 
   from_dir = cmdline['<source_path>'].chomp('/').chomp('\\')
   to_dir =cmdline['<target_path>'].chomp('/').chomp('\\')
-  operation = cmdline['--copy'] ? :copy : :move
+  operation = cmdline['--move'] ? :move : :copy
 
+puts operation
   unless from_dir.nil? || to_dir.nil?
     start_time = Time.now
 

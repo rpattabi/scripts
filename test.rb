@@ -272,16 +272,7 @@ class MediaImportTest < Test::Unit::TestCase
   end
 
   def test_import_commandline_move
-    # default option is move
-    TARGET_FILES.each { |f| File.delete(f) if File.exists? f }
-
-    `ruby import-media.rb #{SOURCE} #{TARGET}`
-    assert(@source_files_valid_media.all? { |f| !File.exists?(f) })
-    assert(TARGET_FILES.all? { |f| File.exists?(f) })
-
     # move option
-    teardown
-    setup
     TARGET_FILES.each { |f| File.delete(f) if File.exists? f }
 
     `ruby import-media.rb --move #{SOURCE} #{TARGET}`
@@ -316,14 +307,23 @@ class MediaImportTest < Test::Unit::TestCase
   end
 
   def test_import_commandline_copy
+    # default option is copy
+    TARGET_FILES.each { |f| File.delete(f) if File.exists? f }
+
+    `ruby import-media.rb #{SOURCE} #{TARGET}`
+    assert(@source_files_valid_media.all? { |f| File.exists?(f) })
+    assert(TARGET_FILES.all? { |f| File.exists?(f) })
+
     # copy option
+    teardown
+    setup
     TARGET_FILES.each { |f| File.delete(f) if File.exists? f }
 
     `ruby import-media.rb --copy #{SOURCE} #{TARGET}`
     assert(@source_files_valid_media.all? { |f| File.exists?(f) })
     assert(TARGET_FILES.all? { |f| File.exists?(f) })
 
-    # mv option
+    # cp option
     teardown
     setup
     TARGET_FILES.each { |f| File.delete(f) if File.exists? f }
