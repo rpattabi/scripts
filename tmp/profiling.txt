@@ -1,0 +1,868 @@
+  %   cumulative   self              self     total
+ time   seconds   seconds    calls  ms/call  ms/call  name
+ 34.64     1.24      1.24    12026     0.10     0.92  Array#each
+  6.15     1.46      0.22    11298     0.02     0.17
+MimeMagic#magic_match_io
+  4.19     1.61      0.15    11298     0.01     0.15  Enumerable.any?
+  4.19     1.76      0.15    18950     0.01     0.01  IO#read
+  3.35     1.88      0.12    18809     0.01     0.01  IO#seek
+  3.07     1.99      0.11     1414     0.08     0.23
+MiniExiftool#convert_after_load
+  2.79     2.09      0.10      169     0.59     0.59  IO#copy_stream
+  2.51     2.18      0.09    20820     0.00     0.00  Module#===
+  2.51     2.27      0.09    18809     0.00     0.00  String#bytesize
+  1.96     2.34      0.07     1591     0.04     0.05
+FileUtils::Entry_#join
+  1.96     2.41      0.07     1580     0.04     0.05  MiniExiftool#unify
+  1.40     2.46      0.05       64     0.78     8.75
+Kernel.gem_original_require
+  1.12     2.50      0.04    21822     0.00     0.00  String#==
+  1.12     2.54      0.04      215     0.19     0.19  File#unlink
+  1.12     2.58      0.04      115     0.35     0.61  Date#_parse
+  1.12     2.62      0.04      820     0.05     0.12
+FileUtils::Entry_#directory?
+  0.84     2.65      0.03     4998     0.01     0.01  Range#begin
+  0.84     2.68      0.03     5819     0.01     0.01  Regexp#===
+  0.84     2.71      0.03      390     0.08     8.36  Array#map
+  0.84     2.74      0.03     2267     0.01     0.01  String#to_s
+  0.84     2.77      0.03     1414     0.02     0.09
+MiniExiftool::TagHash#[]=
+  0.84     2.80      0.03     1188     0.03     0.70  Class#new
+  0.84     2.83      0.03       22     1.36     1.36  Kernel.`
+  0.84     2.86      0.03      115     0.26     1.48  Time#parse
+  0.56     2.88      0.02     1580     0.01     0.06
+MiniExiftool::TagHash#unify
+  0.56     2.90      0.02     2793     0.01     0.01  Fixnum#+
+  0.56     2.92      0.02     1575     0.01     0.01
+Module#method_added
+  0.56     2.94      0.02      170     0.12     0.12  Dir#mkdir
+  0.56     2.96      0.02       63     0.32     0.63  Time#apply_offset
+  0.56     2.98      0.02      354     0.06     0.06  Regexp#match
+  0.56     3.00      0.02      302     0.07     0.07  Kernel.respond_to?
+  0.56     3.02      0.02      511     0.04     0.04
+BasicObject#singleton_method_added
+  0.56     3.04      0.02     1009     0.02     0.07
+FileUtils::Entry_#lstat!
+  0.56     3.06      0.02       18     1.11    26.11  Hash#each_pair
+  0.56     3.08      0.02      143     0.14     0.14  Dir#open
+  0.56     3.10      0.02      115     0.17     0.52  Time#make_time
+  0.28     3.11      0.01      328     0.03     0.03  Fixnum#==
+  0.28     3.12      0.01       14     0.71     2.14  Digest::Class#file
+  0.28     3.13      0.01      439     0.02     0.02  File#initialize
+  0.28     3.14      0.01      316     0.03     0.03
+Kernel.block_given?
+  0.28     3.15      0.01       18     0.56    12.22
+FileUtils::Entry_#preorder_traverse
+  0.28     3.16      0.01      439     0.02     6.51  IO#open
+  0.28     3.17      0.01      215     0.05     0.28
+FileUtils::Entry_#remove_file
+  0.28     3.18      0.01      151     0.07     0.20  FileUtils.fu_mkdir
+  0.28     3.19      0.01      399     0.03     0.03
+Gem::Specification#default_value
+  0.28     3.20      0.01      130     0.08     0.15  FileUtils.fu_list
+  0.28     3.21      0.01        9     1.11    33.33
+MediaImportTest#setup
+  0.28     3.22      0.01      106     0.09     0.19
+Digest::SHA2#update
+  0.28     3.23      0.01       72     0.14     0.14
+String#force_encoding
+  0.28     3.24      0.01       18     0.56     0.56
+JSON::Ext::Parser#initialize
+  0.28     3.25      0.01      116     0.09     0.09  File#dirname
+  0.28     3.26      0.01     3109     0.00     0.00  Hash#[]
+  0.28     3.27      0.01      180     0.06     0.06  File::Stat#file?
+  0.28     3.28      0.01      684     0.01     0.01
+Kernel.initialize_dup
+  0.28     3.29      0.01     1215     0.01     0.01  Kernel.===
+  0.28     3.30      0.01      687     0.01     0.01
+FileUtils::Entry_#initialize
+  0.28     3.31      0.01      164     0.06     0.12
+FileUtils.fu_check_options
+  0.28     3.32      0.01       79     0.13     0.38  Array#map!
+  0.28     3.33      0.01     3850     0.00     0.00  BasicObject#!
+  0.28     3.34      0.01      279     0.04     0.04  Array#flatten
+  0.28     3.35      0.01      209     0.05     0.05
+MiniExiftool#encoding_opt
+  0.28     3.36      0.01      107     0.09     0.09
+Digest::Base#update
+  0.28     3.37      0.01      230     0.04     0.04  String#[]=
+  0.28     3.38      0.01       53     0.19     0.19
+Gem::Specification#dependencies
+  0.28     3.39      0.01       56     0.18     0.18  Symbol#id2name
+  0.28     3.40      0.01      191     0.05     0.05  Array#include?
+  0.28     3.41      0.01        1    10.00    10.00  Time#gm
+  0.28     3.42      0.01       21     0.48     0.48
+Gem::Version#prerelease?
+  0.28     3.43      0.01       21     0.48     0.48  Gem::Version#<=>
+  0.28     3.44      0.01       50     0.20     0.80
+Gem::Dependency#initialize
+  0.28     3.45      0.01      142     0.07     0.07
+Gem::Version#initialize
+  0.28     3.46      0.01       32     0.31     0.31
+Gem::Specification#full_name
+  0.28     3.47      0.01        2     5.00    90.00
+Gem::Specification#each
+  0.28     3.48      0.01       38     0.26     0.26  FileUtils.touch
+  0.28     3.49      0.01     1414     0.01     0.01  Kernel.kind_of?
+  0.28     3.50      0.01       70     0.14     1.14  FileUtils.mkdir_p
+  0.28     3.51      0.01     2496     0.00     0.00  String#include?
+  0.28     3.52      0.01      245     0.04     0.08  BasicObject#!=
+  0.28     3.53      0.01     1283     0.01     0.07
+FileUtils::Entry_#path
+  0.28     3.54      0.01       41     0.24     0.24
+Test::Unit::Assertions.assert
+  0.28     3.55      0.01       91     0.11    29.12  Kernel.catch
+  0.28     3.56      0.01       96     0.10     0.31  Array#reverse_each
+  0.28     3.57      0.01      137     0.07     0.07  Time#now
+  0.28     3.58      0.01      311     0.03     0.29
+FileUtils::Entry_#remove
+  0.00     3.58      0.00       13     0.00     2.31
+Object#find_duplicate
+  0.00     3.58      0.00        2     0.00     0.00
+Kernel.singleton_methods
+  0.00     3.58      0.00       43     0.00     0.00  Hash#keys
+  0.00     3.58      0.00      130     0.00     0.00  Symbol#==
+  0.00     3.58      0.00        7     0.00     0.00  Array#select
+  0.00     3.58      0.00        4     0.00     0.00
+FileUtils.collect_method
+  0.00     3.58      0.00        1     0.00     0.00  Symbol#to_proc
+  0.00     3.58      0.00       28     0.00     0.00  String#intern
+  0.00     3.58      0.00        5     0.00     0.00  Array#-
+  0.00     3.58      0.00      215     0.00     0.00  String#+
+  0.00     3.58      0.00       88     0.00     0.23  Module#module_eval
+  0.00     3.58      0.00       65     0.00     0.00  Fixnum#zero?
+  0.00     3.58      0.00      144     0.00     0.00
+Exception#initialize
+  0.00     3.58      0.00      144     0.00     0.00
+Exception#exception
+  0.00     3.58      0.00      144     0.00     0.00
+Exception#backtrace
+  0.00     3.58      0.00      144     0.00     0.00
+Exception#set_backtrace
+  0.00     3.58      0.00        4     0.00     0.00  Exception#to_s
+  0.00     3.58      0.00        4     0.00     0.00  Exception#message
+  0.00     3.58      0.00       35     0.00     0.00  String#start_with?
+  0.00     3.58      0.00        2     0.00     0.00  String#end_with?
+  0.00     3.58      0.00        1     0.00     0.00  Module#autoload
+  0.00     3.58      0.00      145     0.00     0.00  Kernel.lambda
+  0.00     3.58      0.00       16     0.00     0.00  Regexp#quote
+  0.00     3.58      0.00      183     0.00     0.00
+Module#define_method
+  0.00     3.58      0.00        8     0.00     0.00
+Gem::Deprecate.deprecate
+  0.00     3.58      0.00      137     0.00     0.00  Time#initialize
+  0.00     3.58      0.00       17     0.00     0.00
+FileUtils.private_module_function
+  0.00     3.58      0.00       86     0.00     0.00  Time#utc
+  0.00     3.58      0.00       16     0.00     0.00  Time#year
+  0.00     3.58      0.00       16     0.00     0.00  Time#month
+  0.00     3.58      0.00       16     0.00     0.00  Time#day
+  0.00     3.58      0.00       18     0.00     0.00
+Module#private_class_method
+  0.00     3.58      0.00       78     0.00     0.00  Array#compact!
+  0.00     3.58      0.00       78     0.00     0.00  Array#uniq!
+  0.00     3.58      0.00      148     0.00     0.00  Array#empty?
+  0.00     3.58      0.00      193     0.00     0.00
+Kernel.respond_to_missing?
+  0.00     3.58      0.00       94     0.00     0.00  Array#==
+  0.00     3.58      0.00      264     0.00     0.00  Kernel.class
+  0.00     3.58      0.00      889     0.00     0.00  Regexp#=~
+  0.00     3.58      0.00      142     0.00     0.00
+Gem::Version#correct?
+  0.00     3.58      0.00      142     0.00     0.00  String#strip!
+  0.00     3.58      0.00       70     0.00     0.00  NilClass#nil?
+  0.00     3.58      0.00       79     0.00     0.25
+Gem::Requirement#parse
+  0.00     3.58      0.00        1     0.00     0.00
+Test::Unit::Runner#autorun
+  0.00     3.58      0.00       78     0.00     0.38
+Gem::Requirement#initialize
+  0.00     3.58      0.00        2     0.00     0.00
+Gem::Requirement#default
+  0.00     3.58      0.00      156     0.00     0.00  String#<=>
+  0.00     3.58      0.00        2     0.00     0.00  Enumerable.sort_by
+  0.00     3.58      0.00      201     0.00     0.00
+Hash#initialize_copy
+  0.00     3.58      0.00        1     0.00     0.00  Kernel.at_exit
+  0.00     3.58      0.00        1     0.00     0.00
+BasicObject#singleton_method_undefined
+  0.00     3.58      0.00     1296     0.00     0.00  BasicObject#==
+  0.00     3.58      0.00        1     0.00     0.00  Array#<=>
+  0.00     3.58      0.00        1     0.00     0.00  Time#<=>
+  0.00     3.58      0.00        3     0.00     0.00  Comparable.==
+  0.00     3.58      0.00       16     0.00     0.00  Array#sort
+  0.00     3.58      0.00        2     0.00     0.00
+Gem::Requirement#as_list
+  0.00     3.58      0.00        2     0.00     0.00
+Gem::Requirement#to_s
+  0.00     3.58      0.00        2     0.00     0.00  Array#to_s
+  0.00     3.58      0.00        2     0.00     0.00
+Gem::Requirement#<=>
+  0.00     3.58      0.00        2     0.00     0.00
+MiniTest::Unit::TestCase#inherited
+  0.00     3.58      0.00        1     0.00     0.00  Hash#reject
+  0.00     3.58      0.00      173     0.00     0.00  Kernel.nil?
+  0.00     3.58      0.00        1     0.00    10.00
+Enumerable.partition
+  0.00     3.58      0.00        1     0.00     0.00
+Gem::Specification#reset
+  0.00     3.58      0.00        1     0.00     0.00  Gem.clear_paths
+  0.00     3.58      0.00       27     0.00     0.37  Enumerable.grep
+  0.00     3.58      0.00        8     0.00     0.00  ENV.[]
+  0.00     3.58      0.00        2     0.00     0.00  Proc#yield
+  0.00     3.58      0.00        2     0.00     0.00  Hash#default
+  0.00     3.58      0.00        2     0.00     0.00  Gem.default_dir
+  0.00     3.58      0.00       26     0.00     0.00  String#empty?
+  0.00     3.58      0.00        1     0.00     0.00  Gem.find_home
+  0.00     3.58      0.00        2     0.00     0.00  Gem.user_home
+  0.00     3.58      0.00       50     0.00     0.00  File#exist?
+  0.00     3.58      0.00        1     0.00     0.00  Gem.ruby_engine
+  0.00     3.58      0.00        1     0.00     0.00  Gem.user_dir
+  0.00     3.58      0.00        1     0.00     0.00  Gem.default_path
+  0.00     3.58      0.00      109     0.00     0.00  Array#push
+  0.00     3.58      0.00        4     0.00     0.00  Array#uniq
+  0.00     3.58      0.00        1     0.00     0.00
+Gem::PathSupport#path=
+  0.00     3.58      0.00        1     0.00     0.00
+Gem::PathSupport#initialize
+  0.00     3.58      0.00        1     0.00     0.00  Gem.paths
+  0.00     3.58      0.00        1     0.00     0.00  Gem.path
+  0.00     3.58      0.00        1     0.00     0.00
+Gem::Specification#dirs
+  0.00     3.58      0.00       26     0.00     0.00  Dir#[]
+  0.00     3.58      0.00      591     0.00     0.00  Kernel.untaint
+  0.00     3.58      0.00       82     0.00     0.00  File#file?
+  0.00     3.58      0.00      187     0.00     0.00
+String#initialize_copy
+  0.00     3.58      0.00      665     0.00     0.02  Kernel.dup
+  0.00     3.58      0.00       17     0.00     0.00
+Module#alias_method
+  0.00     3.58      0.00       21     0.00     0.00  Kernel.binding
+  0.00     3.58      0.00      609     0.00     0.00
+Kernel.instance_variable_set
+  0.00     3.58      0.00      121     0.00     0.00  String#<<
+  0.00     3.58      0.00       12     0.00     0.00  String#[]
+  0.00     3.58      0.00      253     0.00     0.00
+Array#initialize_copy
+  0.00     3.58      0.00       42     0.00     0.00
+Kernel.initialize_copy
+  0.00     3.58      0.00       21     0.00     0.00
+Gem::Version#create
+  0.00     3.58      0.00     1158     0.00     0.00  Symbol#to_s
+  0.00     3.58      0.00       21     0.00     0.48
+Gem::Specification#version=
+  0.00     3.58      0.00       76     0.00     0.39
+Gem::Requirement#create
+  0.00     3.58      0.00       21     0.00     0.00
+Gem::Specification#required_rubygems_version=
+  0.00     3.58      0.00       61     0.00     0.00  Kernel.Array
+  0.00     3.58      0.00       21     0.00     0.00
+Gem::Specification#authors=
+  0.00     3.58      0.00       21     0.00     0.00
+Gem::Specification#date=
+  0.00     3.58      0.00       20     0.00     0.50
+Gem::Specification#description=
+  0.00     3.58      0.00       21     0.00     0.00  String#strip
+  0.00     3.58      0.00     1640     0.00     0.00  String#gsub
+  0.00     3.58      0.00       21     0.00     0.00
+Gem::Specification#summary=
+  0.00     3.58      0.00       42     0.00     0.00
+Gem::Version#segments
+  0.00     3.58      0.00       44     0.00     0.00  Array#size
+  0.00     3.58      0.00       24     0.00     0.00  Fixnum#>
+  0.00     3.58      0.00     2736     0.00     0.00  Fixnum#-
+  0.00     3.58      0.00       42     0.00     0.00  Fixnum#<=
+  0.00     3.58      0.00       21     0.00     0.00  Fixnum#<=>
+  0.00     3.58      0.00       12     0.00     0.00
+Module#instance_methods
+  0.00     3.58      0.00       21     0.00     0.48  Comparable.>=
+  0.00     3.58      0.00      146     0.00     0.00  Array#last
+  0.00     3.58      0.00      248     0.00     0.00  Array#pop
+  0.00     3.58      0.00       50     0.00     0.00  Array#length
+  0.00     3.58      0.00       73     0.00     0.00  Array#first
+  0.00     3.58      0.00     1420     0.00     0.00  File#join
+  0.00     3.58      0.00       29     0.00     0.34  Module#class_eval
+  0.00     3.58      0.00      181     0.00     0.00  Array#<<
+  0.00     3.58      0.00       50     0.00     1.00
+Gem::Specification#add_dependency_with_type
+  0.00     3.58      0.00       16     0.00     0.62
+Gem::Specification#add_runtime_dependency
+  0.00     3.58      0.00       34     0.00     1.18
+Gem::Specification#add_development_dependency
+  0.00     3.58      0.00       21     0.00     7.62
+Gem::Specification#initialize
+  0.00     3.58      0.00       21     0.00     7.62  Kernel.eval
+  0.00     3.58      0.00       21     0.00     0.00
+Gem::Specification#loaded_from=
+  0.00     3.58      0.00       21     0.00     7.62
+Gem::Specification#load
+  0.00     3.58      0.00       32     0.00     0.00
+Gem::Specification#platform
+  0.00     3.58      0.00       19     0.00     0.00  Fixnum#to_s
+  0.00     3.58      0.00        6     0.00     0.00
+Gem::Specification#executables=
+  0.00     3.58      0.00        6     0.00     0.00
+Gem::Specification#extra_rdoc_files=
+  0.00     3.58      0.00       11     0.00     0.00
+Gem::Specification#files=
+  0.00     3.58      0.00       12     0.00     0.00
+Gem::Specification#licenses=
+  0.00     3.58      0.00        2     0.00     0.00
+Gem::Specification#rdoc_options=
+  0.00     3.58      0.00        5     0.00     0.00
+Gem::Specification#required_ruby_version=
+  0.00     3.58      0.00        3     0.00     0.00
+Gem::Specification#extensions=
+  0.00     3.58      0.00        3     0.00     0.00  Hash#values
+  0.00     3.58      0.00       30     0.00     0.00  Array#sort!
+  0.00     3.58      0.00        1     0.00     0.00
+Gem::Specification#_resort!
+  0.00     3.58      0.00        2     0.00    85.00
+Gem::Specification#_all
+  0.00     3.58      0.00       11     0.00     0.00
+Gem::Specification#base_dir
+  0.00     3.58      0.00       11     0.00     0.00
+Gem::Specification#gems_dir
+  0.00     3.58      0.00      319     0.00     0.00  File#directory?
+  0.00     3.58      0.00       23     0.00     0.00
+Gem::Specification#full_gem_path
+  0.00     3.58      0.00        1     0.00     0.00  Array#compact
+  0.00     3.58      0.00       21     0.00     0.00  Gem.suffixes
+  0.00     3.58      0.00       21     0.00     0.00
+Gem::Specification#contains_requirable_file?
+  0.00     3.58      0.00        1     0.00     0.00  String#length
+  0.00     3.58      0.00       41     0.00    53.41  Enumerable.find
+  0.00     3.58      0.00        2     0.00    90.00
+Gem::Specification#find_by_path
+  0.00     3.58      0.00        2     0.00     0.00
+Gem::Specification#conflicts
+  0.00     3.58      0.00        2     0.00     0.00
+Gem::Specification#raise_if_conflicts
+  0.00     3.58      0.00        4     0.00     0.00
+Gem::Dependency#type
+  0.00     3.58      0.00        3     0.00     0.00
+Gem::Specification#runtime_dependencies
+  0.00     3.58      0.00      656     0.00     0.00  Hash#delete
+  0.00     3.58      0.00        2     0.00     0.00
+Gem::Specification#activate_dependencies
+  0.00     3.58      0.00        2     0.00     0.00  Array#index
+  0.00     3.58      0.00        2     0.00     0.00
+Gem.load_path_insert_index
+  0.00     3.58      0.00        2     0.00     0.00  Array#insert
+  0.00     3.58      0.00        2     0.00     0.00
+Gem::Specification#add_self_to_load_path
+  0.00     3.58      0.00        2     0.00     0.00
+Gem::Specification#activate
+  0.00     3.58      0.00        2     0.00   100.00  Gem.try_activate
+  0.00     3.58      0.00        1     0.00     0.00
+Enumerable.find_all
+  0.00     3.58      0.00       12     0.00     0.00  Float#/
+  0.00     3.58      0.00        1     0.00     0.00  Float#-@
+  0.00     3.58      0.00        3     0.00     0.00
+Module#method_defined?
+  0.00     3.58      0.00        3     0.00     0.00  Kernel.method
+  0.00     3.58      0.00        1     0.00     0.00  Method#arity
+  0.00     3.58      0.00        8     0.00     0.00  Encoding#find
+  0.00     3.58      0.00       12     0.00     0.00
+Module#const_defined?
+  0.00     3.58      0.00       11     0.00     0.00
+JSON.const_defined_in?
+  0.00     3.58      0.00        1     0.00     0.00  JSON.parser=
+  0.00     3.58      0.00        1     0.00     0.00  Module#constants
+  0.00     3.58      0.00       29     0.00     0.00  Module#const_get
+  0.00     3.58      0.00       14     0.00     0.00  Enumerable.inject
+  0.00     3.58      0.00       10     0.00     0.00
+JSON.deep_const_get
+  0.00     3.58      0.00        1     0.00     0.00
+JSON::Ext::Generator::GeneratorMethods::String.included
+  0.00     3.58      0.00        3     0.00     0.00
+JSON::Ext::Generator::State#initialize
+  0.00     3.58      0.00      184     0.00     0.00  Hash#key?
+  0.00     3.58      0.00        1     0.00    10.00  JSON.generator=
+  0.00     3.58      0.00        9     0.00     0.00  Fixnum#|
+  0.00     3.58      0.00        1     0.00     0.00  Marshal.dump
+  0.00     3.58      0.00       15     0.00     0.00
+Digest::Class#initialize
+  0.00     3.58      0.00       16     0.00     0.00  Digest::Base#reset
+  0.00     3.58      0.00        1     0.00     0.00  Kernel.inspect
+  0.00     3.58      0.00       15     0.00     0.00
+Digest::Base#finish
+  0.00     3.58      0.00        1     0.00     0.00
+Digest::Instance.digest
+  0.00     3.58      0.00        1     0.00     0.00
+Digest::Class#digest
+  0.00     3.58      0.00        3     0.00     0.00  Module#protected
+  0.00     3.58      0.00        1     0.00     0.00
+Module#initialize_copy
+  0.00     3.58      0.00        8     0.00     0.00
+Module#method_undefined
+  0.00     3.58      0.00        8     0.00     0.00
+Module#undef_method
+  0.00     3.58      0.00        4     0.00     0.00
+Module#public_instance_methods
+  0.00     3.58      0.00        1     0.00     0.00  Etc.systmpdir
+  0.00     3.58      0.00        1     0.00     0.00  Class#initialize
+  0.00     3.58      0.00        1     0.00     0.00
+Delegator#public_api
+  0.00     3.58      0.00      138     0.00     0.00
+Delegator#delegating_block
+  0.00     3.58      0.00        2     0.00     0.00
+Kernel.define_singleton_method
+  0.00     3.58      0.00        1     0.00    10.00
+Object#DelegateClass
+  0.00     3.58      0.00        8     0.00     0.00
+Delegator#const_missing
+  0.00     3.58      0.00       34     0.00     0.00  Fixnum#div
+  0.00     3.58      0.00       12     0.00     0.00
+MiniExiftool#opts_accessor
+  0.00     3.58      0.00      209     0.00     0.00  String#to_sym
+  0.00     3.58      0.00        1     0.00     0.00  Bignum#-
+  0.00     3.58      0.00        1     0.00     0.00
+Test::Unit::RunCount.have_run?
+  0.00     3.58      0.00        2     0.00     0.00
+MiniTest::Unit#initialize
+  0.00     3.58      0.00        2     0.00     0.00
+Test::Unit::Options.initialize
+  0.00     3.58      0.00        1     0.00     0.00
+MiniTest::Unit#runner
+  0.00     3.58      0.00        1     0.00     0.00  String#*
+  0.00     3.58      0.00        1     0.00     0.00  OptionParser#base
+  0.00     3.58      0.00        4     0.00     0.00  Proc#call
+  0.00     3.58      0.00        1     0.00     0.00  Hash#each
+  0.00     3.58      0.00        1     0.00     0.00
+OptionParser#add_officious
+  0.00     3.58      0.00        1     0.00     0.00
+OptionParser#initialize
+  0.00     3.58      0.00        1     0.00     0.00
+Test::Unit::Options.option_parser
+  0.00     3.58      0.00       28     0.00     0.00  Hash#invert
+  0.00     3.58      0.00       14     0.00     0.00  Hash#update
+  0.00     3.58      0.00       14     0.00     0.71  Array#delete_if
+  0.00     3.58      0.00       14     0.00     0.71
+OptionParser::List#update
+  0.00     3.58      0.00       14     0.00     0.71
+OptionParser::List#append
+  0.00     3.58      0.00        1     0.00     0.00
+OptionParser#separator
+  0.00     3.58      0.00      156     0.00     0.00  Hash#fetch
+  0.00     3.58      0.00      156     0.00     0.00
+OptionParser::List#search
+  0.00     3.58      0.00        1     0.00     0.00  Fixnum#<<
+  0.00     3.58      0.00       52     0.00     0.00  OptionParser#visit
+  0.00     3.58      0.00       51     0.00     0.00
+OptionParser#search
+  0.00     3.58      0.00      280     0.00     0.00  Fixnum#*
+  0.00     3.58      0.00      102     0.00     0.00  Symbol#===
+  0.00     3.58      0.00     1593     0.00     0.00  String#downcase
+  0.00     3.58      0.00        4     0.00     0.00
+OptionParser::Switch::NoArgument#pattern
+  0.00     3.58      0.00       13     0.00     2.31
+OptionParser#make_switch
+  0.00     3.58      0.00       13     0.00     3.08
+OptionParser#define
+  0.00     3.58      0.00       13     0.00     3.08  OptionParser#on
+  0.00     3.58      0.00       12     0.00     0.00
+OptionParser#notwice
+  0.00     3.58      0.00        9     0.00     0.00  String#===
+  0.00     3.58      0.00        9     0.00     0.00  Module#>=
+  0.00     3.58      0.00        8     0.00     0.00
+OptionParser::Switch::NoArgument#incompatible_argument_styles
+  0.00     3.58      0.00        9     0.00     0.00
+OptionParser::Switch#guess
+  0.00     3.58      0.00        1     0.00     0.00  Array#hash
+  0.00     3.58      0.00        2     0.00     0.00  Method#to_proc
+  0.00     3.58      0.00        2     0.00     0.00  Array#fetch
+  0.00     3.58      0.00        1     0.00    20.00
+Test::Unit::Options.setup_options
+  0.00     3.58      0.00        1     0.00    30.00
+Test::Unit::GlobOption.setup_options
+  0.00     3.58      0.00        1     0.00    40.00
+Test::Unit::LoadPathOption.setup_options
+  0.00     3.58      0.00        1     0.00    40.00
+Test::Unit::GCStressOption.setup_options
+  0.00     3.58      0.00        1     0.00     0.00  ENV.include?
+  0.00     3.58      0.00      104     0.00     0.00  Array#shift
+  0.00     3.58      0.00        1     0.00     0.00  String#size
+  0.00     3.58      0.00        1     0.00     0.00
+OptionParser#parse_in_order
+  0.00     3.58      0.00        1     0.00     0.00
+OptionParser#order!
+  0.00     3.58      0.00        4     0.00     0.00  Array#[]=
+  0.00     3.58      0.00        1     0.00     0.00
+OptionParser#permute!
+  0.00     3.58      0.00        1     0.00     0.00
+OptionParser#parse!
+  0.00     3.58      0.00        1     0.00     0.00  Array#flatten!
+  0.00     3.58      0.00        1     0.00     0.00  RbConfig.ruby
+  0.00     3.58      0.00        1     0.00     0.00
+Test::Unit::Options.non_options
+  0.00     3.58      0.00        1     0.00     0.00
+Test::Unit::GlobOption.non_options
+  0.00     3.58      0.00        1     0.00     0.00
+Test::Unit::GCStressOption.non_options
+  0.00     3.58      0.00        1     0.00    40.00
+Test::Unit::Options.process_args
+  0.00     3.58      0.00       44     0.00     0.00
+MiniTest::Unit#output
+  0.00     3.58      0.00       31     0.00     0.00  IO#write
+  0.00     3.58      0.00        9     0.00     0.00  IO#puts
+  0.00     3.58      0.00        8     0.00     0.00
+MiniTest::Unit#puts
+  0.00     3.58      0.00       57     0.00     0.00  Array#+
+  0.00     3.58      0.00        1     0.00     0.00
+MiniTest::Unit#plugins
+  0.00     3.58      0.00        2     0.00     0.00  Module#name
+  0.00     3.58      0.00        1     0.00     0.00
+MiniTest::Unit::TestCase#test_suites
+  0.00     3.58      0.00        1     0.00     0.00  IO#sync
+  0.00     3.58      0.00        2     0.00     0.00  IO#sync=
+  0.00     3.58      0.00       11     0.00     0.00
+MiniTest::Unit#options
+  0.00     3.58      0.00        2     0.00     0.00  Regexp#initialize
+  0.00     3.58      0.00        2     0.00     0.00
+Test::Unit::TestCase#test_order
+  0.00     3.58      0.00        2     0.00     0.00
+MiniTest::Unit::TestCase#test_methods
+  0.00     3.58      0.00        9     0.00     0.00
+MiniTest::Unit::TestCase#initialize
+  0.00     3.58      0.00       50     0.00     0.00
+MiniTest::Assertions._assertions=
+  0.00     3.58      0.00        1     0.00     0.00  Array#pack
+  0.00     3.58      0.00       34     0.00     0.00  Array#try_convert
+  0.00     3.58      0.00      622     0.00     0.00  File#path
+  0.00     3.58      0.00       34     0.00     0.00  File#identical?
+  0.00     3.58      0.00       34     0.00     0.00  FileUtils.fu_same?
+  0.00     3.58      0.00       62     0.00     0.00  File#stat
+  0.00     3.58      0.00       70     0.00     0.00
+Module#module_function
+  0.00     3.58      0.00      631     0.00     0.00
+FileUtils::Entry_#rel
+  0.00     3.58      0.00        3     0.00     0.00
+MiniTest::Unit::TestCase#reset_setup_teardown_hooks
+  0.00     3.58      0.00     1009     0.00     0.00
+FileUtils::Entry_#dereference?
+  0.00     3.58      0.00     1009     0.00     0.05
+FileUtils::Entry_#lstat
+  0.00     3.58      0.00        1     0.00     0.00
+MiniTest::Unit::TestCase#reset
+  0.00     3.58      0.00        1     0.00     0.00  Signal.list
+  0.00     3.58      0.00      180     0.00     0.11
+FileUtils::Entry_#file?
+  0.00     3.58      0.00      899     0.00     0.00
+File::Stat#directory?
+  0.00     3.58      0.00       16     0.00     0.00  File#expand_path
+  0.00     3.58      0.00        9     0.00     0.00
+FileUtils::Entry_#descendant_diretory?
+  0.00     3.58      0.00      167     0.00     0.00  String#=~
+  0.00     3.58      0.00      180     0.00     0.83
+FileUtils::Entry_#copy
+  0.00     3.58      0.00      425     0.00     0.00
+FileUtils::StreamUtils_.fu_windows?
+  0.00     3.58      0.00       62     0.00    12.26  Kernel.require
+  0.00     3.58      0.00      143     0.00     0.00  Dir#each
+  0.00     3.58      0.00      143     0.00     0.00  Enumerable.to_a
+  0.00     3.58      0.00      143     0.00     0.14  Dir#entries
+  0.00     3.58      0.00      133     0.00     0.00  Array#reject
+  0.00     3.58      0.00      451     0.00     0.00
+FileUtils::Entry_#prefix
+  0.00     3.58      0.00        1     0.00     0.00
+OptionParser::Arguable.extend_object
+  0.00     3.58      0.00      114     0.00     0.70
+FileUtils::Entry_#entries
+  0.00     3.58      0.00       27     0.00     0.00  Array#reverse
+  0.00     3.58      0.00       18     0.00     0.00  Array#concat
+  0.00     3.58      0.00      559     0.00     0.00  File#lstat
+  0.00     3.58      0.00       16     0.00     0.00
+BasicObject#instance_eval
+  0.00     3.58      0.00      169     0.00     0.00  IO#stat
+  0.00     3.58      0.00      169     0.00     0.00  File::Stat#mode
+  0.00     3.58      0.00       14     0.00     0.00  Module#const_set
+  0.00     3.58      0.00      439     0.00     0.00  IO#close
+  0.00     3.58      0.00        3     0.00     0.00  Regexp#hash
+  0.00     3.58      0.00      169     0.00     0.71
+FileUtils::Entry_#copy_file
+  0.00     3.58      0.00       13     0.00     0.00
+OptionParser#accept
+  0.00     3.58      0.00       18     0.00    12.22
+FileUtils.copy_entry
+  0.00     3.58      0.00       34     0.00     6.47
+FileUtils.fu_each_src_dest0
+  0.00     3.58      0.00       34     0.00     6.47
+FileUtils.fu_each_src_dest
+  0.00     3.58      0.00       18     0.00    12.22  FileUtils.cp_r
+  0.00     3.58      0.00       13     0.00     0.00
+OptionParser::List#accept
+  0.00     3.58      0.00      332     0.00     0.00  String#chomp
+  0.00     3.58      0.00      356     0.00     0.00  Kernel.hash
+  0.00     3.58      0.00       27     0.00     0.00  OptionParser#top
+  0.00     3.58      0.00      140     0.00     0.00
+SystemCallError#initialize
+  0.00     3.58      0.00      131     0.00     0.00
+SystemCallError#===
+  0.00     3.58      0.00       38     0.00     0.00  File#utime
+  0.00     3.58      0.00       32     0.00     0.00
+Module#attr_accessor
+  0.00     3.58      0.00       60     0.00     0.00  File#basename
+  0.00     3.58      0.00        9     0.00     0.00  Module#attr_writer
+  0.00     3.58      0.00       90     0.00     0.00  Class#superclass
+  0.00     3.58      0.00       27     0.00     0.00
+MiniTest::Unit::TestCase#setup_hooks
+  0.00     3.58      0.00        9     0.00     0.00
+MiniTest::Unit::TestCase#run_setup_hooks
+  0.00     3.58      0.00        3     0.00     0.00  Kernel.__method__
+  0.00     3.58      0.00        7     0.00     0.00
+FileUtils.copy_file
+  0.00     3.58      0.00        7     0.00     0.00  FileUtils.cp
+  0.00     3.58      0.00       13     0.00     0.00  Array#collect!
+  0.00     3.58      0.00       90     0.00     0.00  Kernel.taint
+  0.00     3.58      0.00       77     0.00     0.00  Array#unshift
+  0.00     3.58      0.00       57     0.00     0.00  File#zero?
+  0.00     3.58      0.00       49     0.00     0.00  File#readable?
+  0.00     3.58      0.00       49     0.00     0.00  File#socket?
+  0.00     3.58      0.00       39     0.00     0.00  IO#binmode
+  0.00     3.58      0.00       22     0.00     0.00  Kernel.proc
+  0.00     3.58      0.00       20     0.00     0.00
+OptionParser::Switch#initialize
+  0.00     3.58      0.00        6     0.00     0.00  Proc#new
+  0.00     3.58      0.00        8     0.00     0.00
+BasicObject#initialize
+  0.00     3.58      0.00        3     0.00     0.00
+OptionParser::List#initialize
+  0.00     3.58      0.00     2499     0.00     0.00  Range#end
+  0.00     3.58      0.00       62     0.00     0.00  Hash#initialize
+  0.00     3.58      0.00       36     0.00     0.00
+MimeMagic#initialize
+  0.00     3.58      0.00       39     0.00    51.79  MimeMagic#by_magic
+  0.00     3.58      0.00       36     0.00     0.00  MimeMagic#image?
+  0.00     3.58      0.00       18     0.00     0.00  Hash#merge
+  0.00     3.58      0.00        1     0.00     0.00
+Tempfile::Remover#initialize
+  0.00     3.58      0.00        1     0.00     0.00
+ObjectSpace.define_finalizer
+  0.00     3.58      0.00        1     0.00     0.00  Hash#try_convert
+  0.00     3.58      0.00        1     0.00     0.00
+File::Stat#writable?
+  0.00     3.58      0.00        1     0.00     0.00  Dir#tmpdir
+  0.00     3.58      0.00        1     0.00     0.00
+Dir::Tmpname.tmpdir
+  0.00     3.58      0.00        1     0.00     0.00  Time#strftime
+  0.00     3.58      0.00        1     0.00     0.00
+#<Module:0x8a9fb98>.rand
+  0.00     3.58      0.00        1     0.00     0.00  Bignum#to_s
+  0.00     3.58      0.00        1     0.00     0.00
+Dir::Tmpname.make_tmpname
+  0.00     3.58      0.00        1     0.00     0.00
+#<Module:0x8a9fb98>.class
+  0.00     3.58      0.00        1     0.00     0.00  Tempfile#mkdir
+  0.00     3.58      0.00       97     0.00     0.00  Dir#rmdir
+  0.00     3.58      0.00        1     0.00     0.00  Tempfile#rmdir
+  0.00     3.58      0.00        1     0.00     0.00  Tempfile#locking
+  0.00     3.58      0.00        1     0.00     0.00  Fixnum#~
+  0.00     3.58      0.00        1     0.00     0.00  Fixnum#&
+  0.00     3.58      0.00        1     0.00     0.00
+Dir::Tmpname.create
+  0.00     3.58      0.00        1     0.00     0.00  BasicObject#equal?
+  0.00     3.58      0.00        1     0.00     0.00
+#<Class:0x8a1e980>#__setobj__
+  0.00     3.58      0.00        1     0.00     0.00
+Delegator#initialize
+  0.00     3.58      0.00        1     0.00     0.00
+Tempfile#initialize
+  0.00     3.58      0.00        1     0.00     0.00  Tempfile#_close
+  0.00     3.58      0.00        1     0.00     0.00  Tempfile#close
+  0.00     3.58      0.00       18     0.00     0.00  MiniExiftool#setup
+  0.00     3.58      0.00       36     0.00     0.00  Hash#clear
+  0.00     3.58      0.00       18     0.00     0.56
+MiniExiftool#generate_encoding_params
+  0.00     3.58      0.00       54     0.00     0.00  String#encode
+  0.00     3.58      0.00       18     0.00     0.00
+MiniExiftool#escape
+  0.00     3.58      0.00     1550     0.00     0.00  Hash#[]=
+  0.00     3.58      0.00       18     0.00     0.56
+MiniExiftool#cmd_gen
+  0.00     3.58      0.00       18     0.00     0.00  Tempfile#path
+  0.00     3.58      0.00      118     0.00     0.00  Module#private
+  0.00     3.58      0.00       18     0.00     0.00
+Process::Status#exitstatus
+  0.00     3.58      0.00       18     0.00     1.67  MiniExiftool#run
+  0.00     3.58      0.00       18     0.00     0.56
+MiniExiftool#adapt_encoding
+  0.00     3.58      0.00       18     0.00     0.00  String#encoding
+  0.00     3.58      0.00       27     0.00     0.00  Module#attr_reader
+  0.00     3.58      0.00       18     0.00     0.00
+JSON::Ext::Parser#parse
+  0.00     3.58      0.00       18     0.00     0.56  JSON.parse
+  0.00     3.58      0.00       39     0.00     0.00  Module#include
+  0.00     3.58      0.00      995     0.00     0.00
+String#valid_encoding?
+  0.00     3.58      0.00       38     0.00     0.00  Module#included
+  0.00     3.58      0.00       39     0.00     0.00
+Module#append_features
+  0.00     3.58      0.00      143     0.00     0.00  Module#public
+  0.00     3.58      0.00      358     0.00     0.00  Fixnum#divmod
+  0.00     3.58      0.00      114     0.00     0.00  String#sub
+  0.00     3.58      0.00      115     0.00     0.00  Module#==
+  0.00     3.58      0.00      115     0.00     0.00  String#gsub!
+  0.00     3.58      0.00       43     0.00     0.00  String#scan
+  0.00     3.58      0.00      230     0.00     0.00  MatchData#begin
+  0.00     3.58      0.00      230     0.00     0.00  MatchData#end
+  0.00     3.58      0.00       24     0.00     0.00  Array#join
+  0.00     3.58      0.00       10     0.00     0.00  Kernel.extend
+  0.00     3.58      0.00       63     0.00     0.00  String#upcase
+  0.00     3.58      0.00       63     0.00     0.00  Time#zone_offset
+  0.00     3.58      0.00      126     0.00     0.00  Fixnum#<
+  0.00     3.58      0.00       10     0.00     0.00  Module#extended
+  0.00     3.58      0.00       63     0.00     0.00  Time#zone_utc?
+  0.00     3.58      0.00       54     0.00     0.00  Time#localtime
+  0.00     3.58      0.00       10     0.00     0.00
+Module#extend_object
+  0.00     3.58      0.00        3     0.00     0.00  Array#collect
+  0.00     3.58      0.00       52     0.00     0.00  Time#local
+  0.00     3.58      0.00       32     0.00     0.00  Integer#integer?
+  0.00     3.58      0.00       16     0.00     0.00  Rational#convert
+  0.00     3.58      0.00       16     0.00     0.00  Kernel.Rational
+  0.00     3.58      0.00        9     0.00     0.00  Hash#include?
+  0.00     3.58      0.00      371     0.00     0.00  String#to_i
+  0.00     3.58      0.00       54     0.00     0.00
+MiniExiftool::TagHash#delete
+  0.00     3.58      0.00       18     0.00    26.11
+MiniExiftool#set_values
+  0.00     3.58      0.00       18     0.00    27.22
+MiniExiftool#parse_output
+  0.00     3.58      0.00       18     0.00    30.00  MiniExiftool#load
+  0.00     3.58      0.00       18     0.00    30.00
+MiniExiftool#initialize
+  0.00     3.58      0.00       49     0.00     0.00  String#split
+  0.00     3.58      0.00       56     0.00     0.00  String#sub!
+  0.00     3.58      0.00      112     0.00     0.00
+MiniExiftool::TagHash#[]
+  0.00     3.58      0.00       56     0.00     0.00  MiniExiftool#[]
+  0.00     3.58      0.00       56     0.00     0.18
+MiniExiftool#method_missing
+  0.00     3.58      0.00       18     0.00    30.56  Object#date
+  0.00     3.58      0.00       32     0.00     0.00  String#%
+  0.00     3.58      0.00       15     0.00     0.00  Object#date_dir
+  0.00     3.58      0.00       65     0.00     0.00  Numeric#nonzero?
+  0.00     3.58      0.00       70     0.00     0.00  File#exists?
+  0.00     3.58      0.00       11     0.00     0.00
+Object#unique_file_name
+  0.00     3.58      0.00       13     0.00     2.31
+Object#compute_target_file_name
+  0.00     3.58      0.00       17     0.00     0.00
+MiniTest::Assertions.message
+  0.00     3.58      0.00       50     0.00     0.00
+MiniTest::Assertions._assertions
+  0.00     3.58      0.00       41     0.00     0.00
+MiniTest::Assertions.assert
+  0.00     3.58      0.00      115     0.00     0.00  IO#set_encoding
+  0.00     3.58      0.00       17     0.00     0.00
+Test::Unit::Assertions.assert_equal
+  0.00     3.58      0.00       13     0.00   203.85  Find.find
+  0.00     3.58      0.00       13     0.00   203.85  Object#files
+  0.00     3.58      0.00       12     0.00   220.00  Object#media_files
+  0.00     3.58      0.00       10     0.00   151.00  Object#analyze
+  0.00     3.58      0.00        1     0.00     0.00
+Digest.const_missing
+  0.00     3.58      0.00       14     0.00     0.00
+Digest::SHA2#initialize
+  0.00     3.58      0.00       22     0.00     0.00  Kernel.freeze
+  0.00     3.58      0.00       14     0.00     1.43
+Digest::Instance.file
+  0.00     3.58      0.00      175     0.00     0.00  Array#[]
+  0.00     3.58      0.00       14     0.00     0.00
+Digest::Base#initialize_copy
+  0.00     3.58      0.00       28     0.00     0.00
+Kernel.initialize_clone
+  0.00     3.58      0.00       14     0.00     0.00  Kernel.clone
+  0.00     3.58      0.00       14     0.00     0.00
+Digest::SHA2#initialize_copy
+  0.00     3.58      0.00       14     0.00     0.00
+Digest::Instance.digest!
+  0.00     3.58      0.00       14     0.00     0.00
+Digest::SHA2#finish
+  0.00     3.58      0.00        7     0.00     0.00
+Digest::Instance.==
+  0.00     3.58      0.00        2     0.00     0.00  File#delete
+  0.00     3.58      0.00       77     0.00     0.00  Class#inherited
+  0.00     3.58      0.00      311     0.00     0.16
+FileUtils::Entry_#platform_support
+  0.00     3.58      0.00      228     0.00     0.00  Hash#empty?
+  0.00     3.58      0.00       64     0.00     0.00
+Gem.unresolved_deps
+  0.00     3.58      0.00      311     0.00     1.61
+FileUtils::Entry_#postorder_traverse
+  0.00     3.58      0.00       22     0.00    10.00
+FileUtils.remove_entry
+  0.00     3.58      0.00       22     0.00    10.00  FileUtils.rm_r
+  0.00     3.58      0.00       96     0.00     0.00
+FileUtils::Entry_#remove_dir1
+  0.00     3.58      0.00        1     0.00   310.00
+MediaImportTest#test_analyze_yield
+  0.00     3.58      0.00        9     0.00     0.00
+MiniTest::Unit::TestCase#io?
+  0.00     3.58      0.00       27     0.00     0.00
+MiniTest::Unit::TestCase#teardown_hooks
+  0.00     3.58      0.00        9     0.00     0.00
+MiniTest::Unit::TestCase#run_teardown_hooks
+  0.00     3.58      0.00        9     0.00    24.44
+MediaImportTest#teardown
+  0.00     3.58      0.00        9     0.00   355.56
+MiniTest::Unit::TestCase#run
+  0.00     3.58      0.00        9     0.00   355.56
+Test::Unit::TestCase#run
+  0.00     3.58      0.00       10     0.00     0.00  Float#quo
+  0.00     3.58      0.00       10     0.00     0.00  Time#-
+  0.00     3.58      0.00        9     0.00     0.00  IO#print
+  0.00     3.58      0.00        9     0.00     0.00
+MiniTest::Unit#print
+  0.00     3.58      0.00        1     0.00     0.00
+MediaImportTest#test_date_dir
+  0.00     3.58      0.00        4     0.00     0.00  Kernel.throw
+  0.00     3.58      0.00        4     0.00     0.00  Find.prune
+  0.00     3.58      0.00        1     0.00    10.00
+MediaImportTest#test_files
+  0.00     3.58      0.00        1     0.00     0.00
+MediaImportTest#test_files_commandline
+  0.00     3.58      0.00        9     0.00     0.00
+FileUtils::Entry_#exist?
+  0.00     3.58      0.00        9     0.00     0.00  File#rename
+  0.00     3.58      0.00        9     0.00     1.11  FileUtils.mv
+  0.00     3.58      0.00       21     0.00     0.00  MimeMagic#video?
+  0.00     3.58      0.00        4     0.00   260.00  Object#import
+  0.00     3.58      0.00        4     0.00     0.00  Enumerable.all?
+  0.00     3.58      0.00        1     0.00   830.00
+MediaImportTest#test_import
+  0.00     3.58      0.00        1     0.00     0.00
+MediaImportTest#test_import_commandline
+  0.00     3.58      0.00        1     0.00     0.00  Kernel.raise
+  0.00     3.58      0.00       17     0.00     0.59  FileUtils.mkpath
+  0.00     3.58      0.00        1     0.00    80.00
+MediaImportTest#test_import_errorhandling
+  0.00     3.58      0.00        1     0.00   320.00
+MediaImportTest#test_import_yield
+  0.00     3.58      0.00        1     0.00  1130.00
+MediaImportTest#test_media
+  0.00     3.58      0.00        2     0.00  1600.00
+MiniTest::Unit#_run_suite
+  0.00     3.58      0.00        1     0.00  3200.00
+Test::Unit::Runner#_run_suites
+  0.00     3.58      0.00        2     0.00     0.00  Fixnum#/
+  0.00     3.58      0.00        1     0.00     0.00
+Enumerable.each_with_index
+  0.00     3.58      0.00        1     0.00     0.00
+MiniTest::Unit#status
+  0.00     3.58      0.00        1     0.00     0.00
+Test::Unit::Runner#status
+  0.00     3.58      0.00        1     0.00  3210.00
+MiniTest::Unit#_run_anything
+  0.00     3.58      0.00        1     0.00  3210.00
+MiniTest::Unit#run_tests
+  0.00     3.58      0.00        1     0.00  3250.00
+MiniTest::Unit#_run
+  0.00     3.58      0.00        1     0.00  3250.00  MiniTest::Unit#run
+  0.00     3.58      0.00        1     0.00  3250.00 Test::Unit::RunCount.run
+  0.00     3.58      0.00        1     0.00     0.00 SystemExit#initialize
+  0.00     3.58      0.00        1     0.00     0.00  Kernel.exit
+  0.00     3.58      0.00        1     0.00  3250.00 Test::Unit::RunCount.run_once
+  0.00     3.58      0.00        1     0.00  3580.00  #toplevel
+
