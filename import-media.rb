@@ -52,7 +52,7 @@ def import(from_dir, to_dir, operation=:move)
       open("#{to}.log", 'w') do |f|
         f.puts "original path: #{from}"
         f.puts "siblings at the time of import:"
-        f.puts `ls #{File.dirname(from)}`
+        f.puts `ls "#{File.dirname(from)}"`
       end
     when :error
       yield from, to, :error if block_given?
@@ -223,17 +223,17 @@ begin
         msg = "Moving.. (No exif date) from: #{src} --> #{tgt}"
 
         open("#{tgt}.log", 'w') do |undated_log|
-          undated_log.puts "original path: #{from}"
+          undated_log.puts "original path: #{src}"
           undated_log.puts "siblings at the time of import (source dir):"
-          undated_log.puts `ls #{File.dirname(from)}`
+          undated_log.puts `ls "#{File.dirname(src)}"`
         end
       when :copying_noexifdate
         msg = "Copying.. (No exif date) from: #{src} --> #{tgt}"
 
         open("#{tgt}.log", 'w') do |undated_log|
-          undated_log.puts "original path: #{from}"
+          undated_log.puts "original path: #{src}"
           undated_log.puts "siblings at the time of import (source dir):"
-          undated_log.puts `ls #{File.dirname(from)}`
+          undated_log.puts `ls "#{File.dirname(src)}"`
         end
       when :skipping
         # no need to log. skipping most likely due to duplicate.
