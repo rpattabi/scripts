@@ -1,4 +1,3 @@
-
 #require 'pry'
 #require 'pry-debugger'
 
@@ -236,7 +235,7 @@ begin
       when :name_collision_found
         msg = "Renaming.. Name already exists: #{src} <==> #{tgt}"
       when :error
-        msg = "ERROR.. src: #{src} tgt: #{tgt} event: #{?!.inspect}"
+        msg = "ERROR.. src: #{src} tgt: #{tgt} event: #{$!.inspect}"
       else
         msg = "UNKNOWN_EVENT.. src: #{src} tgt: #{tgt} event: #{event}"
       end
