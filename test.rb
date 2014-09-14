@@ -21,7 +21,8 @@ class MediaImportTest < Test::Unit::TestCase
                   "#{TARGET}/2005/10/28/sample.3gp",
                   "#{TARGET}/2005/10/28/sample.mp4",
                   "#{TARGET}/2005/12/20/sample.m4v",
-                  "#{TARGET}/2008/08/29/IMG_002.JPG"]
+                  "#{TARGET}/2008/08/29/IMG_002.JPG",
+                  "#{TARGET}/2010/08/20/dateintext.jpg"]
 
   def setup
     FileUtils.cp_r "#{TEST_DATA}/.", SOURCE

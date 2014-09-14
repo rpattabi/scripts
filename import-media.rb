@@ -116,6 +116,14 @@ def date(media_file)
   date = exif.TrackCreateDate if date.nil?
   date = exif.CreateDate if date.nil?
 
+  if date.instance_of? String
+    begin
+      date = Time.parse date
+    rescue
+      date = nil
+    end
+  end
+
   date
 end
 
