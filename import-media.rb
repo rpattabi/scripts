@@ -38,7 +38,7 @@ def media_files(dir)
   media
 end
 
-def import(from_dir, to_dir, operation=:move)
+def import(from_dir, to_dir, operation=:copy)
   #binding.pry
   analyze(from_dir, to_dir) do |from, to, event|
     case event

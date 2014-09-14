@@ -84,10 +84,26 @@ class MediaImportTest < Test::Unit::TestCase
     assert_equal("#{TARGET}/2009/09/30", dir)
   end
 
-  def test_import
+  def test_import_default
     TARGET_FILES.each { |f| File.delete(f) if File.exists? f }
 
     import SOURCE, TARGET
+    assert(@source_files_valid_media.all? { |f| File.exists?(f) })
+    assert(TARGET_FILES.all? { |f| File.exists?(f) })
+  end
+
+  def test_import_copy
+    TARGET_FILES.each { |f| File.delete(f) if File.exists? f }
+
+    import SOURCE, TARGET, :copy
+    assert(@source_files_valid_media.all? { |f| File.exists?(f) })
+    assert(TARGET_FILES.all? { |f| File.exists?(f) })
+  end
+
+  def test_import_move
+    TARGET_FILES.each { |f| File.delete(f) if File.exists? f }
+
+    import SOURCE, TARGET, :move
     assert(@source_files_valid_media.all? { |f| !File.exists?(f) })
     assert(TARGET_FILES.all? { |f| File.exists?(f) })
   end
@@ -161,8 +177,20 @@ class MediaImportTest < Test::Unit::TestCase
       target_file = TARGET_FILES.first
       source_file = "#{source_t}/#{File.basename(target_file)}"
 
+      copying = false
+      import source_t, TARGET, :copy do |s,t,e|
+        case e
+          when :copying
+            assert_equal(s, source_file)
+            assert_equal(t, target_file)
+            copying = true
+        end
+      end
+      assert(copying)
+      File.delete target_file
+
       moving = false
-      import source_t, TARGET do |s,t,e|
+      import source_t, TARGET, :move do |s,t,e|
         case e
           when :moving
             assert_equal(s, source_file)
@@ -198,10 +226,22 @@ class MediaImportTest < Test::Unit::TestCase
       end
       assert(name_collision_found)
 
-      moving_noexifdate = false
+      copying_noexifdate = false
       FileUtils.rm_r Dir["#{source_t}/*"]
       FileUtils.cp "#{SOURCE}/noexifdate.png", source_t
-      import source_t, TARGET do |s,t,e|
+      import source_t, TARGET, :copy do |s,t,e|
+        case e
+          when :copying_noexifdate
+            copying_noexifdate = true
+        end
+      end
+      assert(copying_noexifdate)
+
+      moving_noexifdate = false
+      FileUtils.rm_r Dir["#{source_t}/*"]
+      FileUtils.rm_r Dir["#{TARGET}/*"]
+      FileUtils.cp "#{SOURCE}/noexifdate.png", source_t
+      import source_t, TARGET, :move do |s,t,e|
         case e
           when :moving_noexifdate
             moving_noexifdate = true
@@ -381,14 +421,37 @@ class MediaImportTest < Test::Unit::TestCase
     end
   end
 
-  def test_import_noexifdate
+  def test_import_noexifdate_copy
+    source_t = "#{SOURCE}/#{__method__}"
+
+    begin
+      copying_noexifdate = false
+      FileUtils.mkpath source_t
+      FileUtils.cp "#{SOURCE}/noexifdate.png", source_t
+      import source_t, TARGET, :copy do |s,t,e|
+        case e
+          when :copying_noexifdate
+            copying_noexifdate = true
+            assert_equal("#{source_t}/noexifdate.png", s)
+            assert_equal("#{TARGET_UNDATED}/noexifdate.png", t)
+        end
+      end
+      assert(copying_noexifdate)
+      assert(File.exists?("#{TARGET_UNDATED}/noexifdate.png"))
+      assert(File.exists?("#{TARGET_UNDATED}/noexifdate.png.log"))
+    ensure
+      FileUtils.rm_r source_t if File.exists?(source_t)
+    end
+  end
+
+  def test_import_noexifdate_move
     source_t = "#{SOURCE}/#{__method__}"
 
     begin
       moving_noexifdate = false
       FileUtils.mkpath source_t
       FileUtils.cp "#{SOURCE}/noexifdate.png", source_t
-      import source_t, TARGET do |s,t,e|
+      import source_t, TARGET, :move do |s,t,e|
         case e
           when :moving_noexifdate
             moving_noexifdate = true
