@@ -104,27 +104,27 @@ def analyze(from_dir, to_dir)
 end
 
 def date(media_file)
-  exif = MiniExiftool.new media_file
+  begin
+    exif = MiniExiftool.new media_file
 
-  # exif tags from images and avi
-  date = exif.DateTimeOriginal
-  date = exif.DateTimeDigitized if date.nil?
-  date = exif.DateTime if date.nil?
+    # exif tags from images and avi
+    date = exif.DateTimeOriginal
+    date = exif.DateTimeDigitized if date.nil?
+    date = exif.DateTime if date.nil?
 
-  # tags from videos
-  date = exif.MediaCreateDate if date.nil?
-  date = exif.TrackCreateDate if date.nil?
-  date = exif.CreateDate if date.nil?
+    # tags from videos
+    date = exif.MediaCreateDate if date.nil?
+    date = exif.TrackCreateDate if date.nil?
+    date = exif.CreateDate if date.nil?
 
-  if date.instance_of? String
-    begin
+    if date.instance_of? String
       date = Time.parse date
-    rescue
-      date = nil
     end
-  end
 
-  date
+    date
+  rescue
+    nil
+  end
 end
 
 def compute_target_file_name(src, target_dir)
@@ -222,7 +222,7 @@ begin
       when :moving_noexifdate
         msg = "Moving.. (No exif date) from: #{src} --> #{tgt}"
 
-        open("#{to}.log", 'w') do |undated_log|
+        open("#{tgt}.log", 'w') do |undated_log|
           undated_log.puts "original path: #{from}"
           undated_log.puts "siblings at the time of import (source dir):"
           undated_log.puts `ls #{File.dirname(from)}`
@@ -230,7 +230,7 @@ begin
       when :copying_noexifdate
         msg = "Copying.. (No exif date) from: #{src} --> #{tgt}"
 
-        open("#{to}.log", 'w') do |undated_log|
+        open("#{tgt}.log", 'w') do |undated_log|
           undated_log.puts "original path: #{from}"
           undated_log.puts "siblings at the time of import (source dir):"
           undated_log.puts `ls #{File.dirname(from)}`
