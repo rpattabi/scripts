@@ -13,7 +13,8 @@ and if it is not duplicate, different name will be used while
 importing.
 * Writes a neat log at target location everytime this script is invoked.
 * Requires `ruby`
-* Tested on only on `Linux`. Should also work on Windows, Mac, etc.
+* Tested on only on `Linux`. It won't work on Windows (work in progress); not tested on
+Mac (expected to work without any problem).
 
 ### Dependencies
 
