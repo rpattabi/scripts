@@ -7,8 +7,17 @@ require 'fileutils'
 require 'mimemagic'
 require 'mini_exiftool'
 require 'memoist'
+require 'celluloid/autostart'
 
 require './zero-files.rb'
+
+module Enumerable
+  # Simple parallel map using Celluloid::Futures
+  def pmap(&block)
+    futures = map { |elem| Celluloid::Future.new(elem, &block) }
+    futures.map { |future| future.value }
+  end
+end
 
 class Speed
   class << self
@@ -64,9 +73,9 @@ def import(from_dir, to_dir, operation=:copy)
       end
 
       open("#{to}.log", 'w') do |f|
-        f.puts "original path: #{from}"
-        f.puts "siblings at the time of import:"
-        f.puts `ls "#{File.dirname(from)}"`
+        f.print "original path: #{from}" + "\n"
+        f.print "siblings at the time of import:" + "\n"
+        f.print `ls "#{File.dirname(from)}"` + "\n"
       end
     when :error
       yield from, to, :error if block_given?
@@ -77,7 +86,7 @@ def import(from_dir, to_dir, operation=:copy)
 end
 
 def analyze(from_dir, to_dir)
-  media_files(from_dir) do |media_file|
+  media_files(from_dir).pmap do |media_file|
     begin
       date = date(media_file)
 
@@ -216,12 +225,11 @@ begin
   to_dir =cmdline['<target_path>'].chomp('/').chomp('\\')
   operation = cmdline['--move'] ? :move : :copy
 
-puts operation
   unless from_dir.nil? || to_dir.nil?
     start_time = Time.now
 
-    puts
-    puts "#{start_time}: Import Started..."
+    print "\n"
+    print "#{start_time}: Import Started..." + "\n"
 
     FileUtils.mkpath to_dir
     log = File.open("#{to_dir}/import-photos_#{timestamp(start_time)}.log", 'w')
@@ -238,17 +246,17 @@ puts operation
         msg = "Moving.. (No exif date) from: #{src} --> #{tgt}"
 
         open("#{tgt}.log", 'w') do |undated_log|
-          undated_log.puts "original path: #{src}"
-          undated_log.puts "siblings at the time of import (source dir):"
-          undated_log.puts `ls "#{File.dirname(src)}"`
+          undated_log.print "original path: #{src}" + "\n"
+          undated_log.print "siblings at the time of import (source dir):" + "\n"
+          undated_log.print `ls "#{File.dirname(src)}"` + "\n"
         end
       when :copying_noexifdate
         msg = "Copying.. (No exif date) from: #{src} --> #{tgt}"
 
         open("#{tgt}.log", 'w') do |undated_log|
-          undated_log.puts "original path: #{src}"
-          undated_log.puts "siblings at the time of import (source dir):"
-          undated_log.puts `ls "#{File.dirname(src)}"`
+          undated_log.print "original path: #{src}" + "\n"
+          undated_log.print "siblings at the time of import (source dir):" + "\n"
+          undated_log.print `ls "#{File.dirname(src)}"` + "\n"
         end
       when :skipping
         # no need to log. skipping most likely due to duplicate.
@@ -264,8 +272,8 @@ puts operation
       end
 
       unless msg.nil?
-        puts msg
-        log.puts msg
+        print msg + "\n"
+        log.print msg + "\n"
         log.flush
       end
     end
@@ -281,13 +289,13 @@ Import ended on   : #{end_time}
 
 END
 
-    log.puts conclusion
+    log.print conclusion + "\n"
     log.close
 
-    puts conclusion
+    print conclusion + "\n"
   end
 rescue Docopt::Exit => e
-  puts e.message
+  print e.message + "\n"
 end
 
 
